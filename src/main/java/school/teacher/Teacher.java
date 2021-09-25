@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.vet;
+package school.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,17 +34,9 @@ import org.springframework.beans.support.PropertyComparator;
 
 import school.model.Person;
 
-/**
- * Simple JavaBean domain object representing a veterinarian.
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Arjen Poutsma
- */
 @Entity
-@Table(name = "vets")
-public class Vet extends Person {
+@Table(name = "teacher")
+public class Teacher extends Person {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),

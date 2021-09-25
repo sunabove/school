@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.visit;
+package school.lesson;
 
 import java.util.List;
 
@@ -22,26 +22,10 @@ import org.springframework.data.repository.Repository;
 
 import school.model.BaseEntity;
 
-/**
- * Repository class for <code>Visit</code> domain objects All method names are compliant
- * with Spring Data naming conventions so this interface can easily be extended for Spring
- * Data. See:
- * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Michael Isvy
- */
-public interface VisitRepository extends Repository<Visit, Integer> {
+public interface LessonRepository extends Repository<Lesson, Integer> {
 
-	/**
-	 * Save a <code>Visit</code> to the data store, either inserting or updating it.
-	 * @param visit the <code>Visit</code> to save
-	 * @see BaseEntity#isNew
-	 */
-	void save(Visit visit) throws DataAccessException;
+	void save(Lesson visit) throws DataAccessException;
 
-	List<Visit> findByPetId(Integer petId);
+	List<Lesson> findByPetId(Integer petId);
 
 }

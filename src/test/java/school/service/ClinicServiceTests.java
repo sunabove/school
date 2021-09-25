@@ -28,15 +28,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import school.owner.Owner;
-import school.owner.OwnerRepository;
-import school.owner.Pet;
-import school.owner.PetRepository;
-import school.owner.PetType;
-import school.vet.Vet;
-import school.vet.VetRepository;
-import school.visit.Visit;
-import school.visit.VisitRepository;
+import school.lesson.Lesson;
+import school.lesson.LessonRepository;
+import school.student.Student;
+import school.student.StudentRepository;
+import school.student.Subject;
+import school.student.SubjectRepository;
+import school.student.SubjectType;
+import school.teacher.Teacher;
+import school.teacher.TeacherRepository;
 
 /**
  * Integration test of the Service and the Repository layer.
@@ -71,20 +71,20 @@ import school.visit.VisitRepository;
 class ClinicServiceTests {
 
 	@Autowired
-	protected OwnerRepository owners;
+	protected StudentRepository owners;
 
 	@Autowired
-	protected PetRepository pets;
+	protected SubjectRepository pets;
 
 	@Autowired
-	protected VisitRepository visits;
+	protected LessonRepository visits;
 
 	@Autowired
-	protected VetRepository vets;
+	protected TeacherRepository vets;
 
 	@Test
 	void shouldFindOwnersByLastName() {
-		Collection<Owner> owners = this.owners.findByLastName("Davis");
+		Collection<Student> owners = this.owners.findByLastName("Davis");
 		assertThat(owners).hasSize(2);
 
 		owners = this.owners.findByLastName("Daviss");
@@ -93,7 +93,7 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindSingleOwnerWithPet() {
-		Owner owner = this.owners.findById(1);
+		Student owner = this.owners.findById(1);
 		assertThat(owner.getLastName()).startsWith("Franklin");
 		assertThat(owner.getPets()).hasSize(1);
 		assertThat(owner.getPets().get(0).getType()).isNotNull();
@@ -103,10 +103,10 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldInsertOwner() {
-		Collection<Owner> owners = this.owners.findByLastName("Schultz");
+		Collection<Student> owners = this.owners.findByLastName("Schultz");
 		int found = owners.size();
 
-		Owner owner = new Owner();
+		Student owner = new Student();
 		owner.setFirstName("Sam");
 		owner.setLastName("Schultz");
 		owner.setAddress("4, Evans Street");
@@ -122,7 +122,7 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldUpdateOwner() {
-		Owner owner = this.owners.findById(1);
+		Student owner = this.owners.findById(1);
 		String oldLastName = owner.getLastName();
 		String newLastName = oldLastName + "X";
 
@@ -136,7 +136,7 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindPetWithCorrectId() {
-		Pet pet7 = this.pets.findById(7);
+		Subject pet7 = this.pets.findById(7);
 		assertThat(pet7.getName()).startsWith("Samantha");
 		assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
 
@@ -144,24 +144,24 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindAllPetTypes() {
-		Collection<PetType> petTypes = this.pets.findPetTypes();
+		Collection<SubjectType> petTypes = this.pets.findPetTypes();
 
-		PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
+		SubjectType petType1 = EntityUtils.getById(petTypes, SubjectType.class, 1);
 		assertThat(petType1.getName()).isEqualTo("cat");
-		PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
+		SubjectType petType4 = EntityUtils.getById(petTypes, SubjectType.class, 4);
 		assertThat(petType4.getName()).isEqualTo("snake");
 	}
 
 	@Test
 	@Transactional
 	void shouldInsertPetIntoDatabaseAndGenerateId() {
-		Owner owner6 = this.owners.findById(6);
+		Student owner6 = this.owners.findById(6);
 		int found = owner6.getPets().size();
 
-		Pet pet = new Pet();
+		Subject pet = new Subject();
 		pet.setName("bowser");
-		Collection<PetType> types = this.pets.findPetTypes();
-		pet.setType(EntityUtils.getById(types, PetType.class, 2));
+		Collection<SubjectType> types = this.pets.findPetTypes();
+		pet.setType(EntityUtils.getById(types, SubjectType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		owner6.addPet(pet);
 		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
@@ -178,7 +178,7 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldUpdatePetName() throws Exception {
-		Pet pet7 = this.pets.findById(7);
+		Subject pet7 = this.pets.findById(7);
 		String oldName = pet7.getName();
 
 		String newName = oldName + "X";
@@ -191,9 +191,9 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindVets() {
-		Collection<Vet> vets = this.vets.findAll();
+		Collection<Teacher> vets = this.vets.findAll();
 
-		Vet vet = EntityUtils.getById(vets, Vet.class, 3);
+		Teacher vet = EntityUtils.getById(vets, Teacher.class, 3);
 		assertThat(vet.getLastName()).isEqualTo("Douglas");
 		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
 		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
@@ -203,9 +203,9 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldAddNewVisitForPet() {
-		Pet pet7 = this.pets.findById(7);
+		Subject pet7 = this.pets.findById(7);
 		int found = pet7.getVisits().size();
-		Visit visit = new Visit();
+		Lesson visit = new Lesson();
 		pet7.addVisit(visit);
 		visit.setDescription("test");
 		this.visits.save(visit);
@@ -218,9 +218,9 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
-		Collection<Visit> visits = this.visits.findByPetId(7);
+		Collection<Lesson> visits = this.visits.findByPetId(7);
 		assertThat(visits).hasSize(2);
-		Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
+		Lesson[] visitArr = visits.toArray(new Lesson[visits.size()]);
 		assertThat(visitArr[0].getDate()).isNotNull();
 		assertThat(visitArr[0].getPetId()).isEqualTo(7);
 	}

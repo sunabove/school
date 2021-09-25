@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package school.owner;
+package school.student;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -29,34 +29,34 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import school.owner.PetRepository;
-import school.owner.PetType;
-import school.owner.PetTypeFormatter;
+import school.student.SubjectRepository;
+import school.student.SubjectType;
+import school.student.SubjectTypeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 /**
- * Test class for {@link PetTypeFormatter}
+ * Test class for {@link SubjectTypeFormatter}
  *
  * @author Colin But
  */
 @ExtendWith(MockitoExtension.class)
-class PetTypeFormatterTests {
+class SubjectTypeFormatterTests {
 
 	@Mock
-	private PetRepository pets;
+	private SubjectRepository pets;
 
-	private PetTypeFormatter petTypeFormatter;
+	private SubjectTypeFormatter petTypeFormatter;
 
 	@BeforeEach
 	void setup() {
-		this.petTypeFormatter = new PetTypeFormatter(pets);
+		this.petTypeFormatter = new SubjectTypeFormatter(pets);
 	}
 
 	@Test
 	void testPrint() {
-		PetType petType = new PetType();
+		SubjectType petType = new SubjectType();
 		petType.setName("Hamster");
 		String petTypeName = this.petTypeFormatter.print(petType, Locale.ENGLISH);
 		assertThat(petTypeName).isEqualTo("Hamster");
@@ -65,7 +65,7 @@ class PetTypeFormatterTests {
 	@Test
 	void shouldParse() throws ParseException {
 		given(this.pets.findPetTypes()).willReturn(makePetTypes());
-		PetType petType = petTypeFormatter.parse("Bird", Locale.ENGLISH);
+		SubjectType petType = petTypeFormatter.parse("Bird", Locale.ENGLISH);
 		assertThat(petType.getName()).isEqualTo("Bird");
 	}
 
@@ -79,16 +79,16 @@ class PetTypeFormatterTests {
 
 	/**
 	 * Helper method to produce some sample pet types just for test purpose
-	 * @return {@link Collection} of {@link PetType}
+	 * @return {@link Collection} of {@link SubjectType}
 	 */
-	private List<PetType> makePetTypes() {
-		List<PetType> petTypes = new ArrayList<>();
-		petTypes.add(new PetType() {
+	private List<SubjectType> makePetTypes() {
+		List<SubjectType> petTypes = new ArrayList<>();
+		petTypes.add(new SubjectType() {
 			{
 				setName("Dog");
 			}
 		});
-		petTypes.add(new PetType() {
+		petTypes.add(new SubjectType() {
 			{
 				setName("Bird");
 			}

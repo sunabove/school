@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.vet;
+package school.teacher;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.util.SerializationUtils;
 
-import school.vet.Vet;
+import school.teacher.Teacher;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Dave Syer
  */
-class VetTests {
+class TeacherTests {
 
 	@Test
 	void testSerialization() {
-		Vet vet = new Vet();
+		Teacher vet = new Teacher();
 		vet.setFirstName("Zaphod");
 		vet.setLastName("Beeblebrox");
 		vet.setId(123);
-		Vet other = (Vet) SerializationUtils.deserialize(SerializationUtils.serialize(vet));
+		Teacher other = (Teacher) SerializationUtils.deserialize(SerializationUtils.serialize(vet));
 		assertThat(other.getFirstName()).isEqualTo(vet.getFirstName());
 		assertThat(other.getLastName()).isEqualTo(vet.getLastName());
 		assertThat(other.getId()).isEqualTo(vet.getId());

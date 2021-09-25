@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.owner;
+package school.student;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import school.visit.VisitRepository;
+import school.lesson.LessonRepository;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -38,17 +38,17 @@ import java.util.Map;
  * @author Michael Isvy
  */
 @Controller
-class OwnerController {
+class StudentController {
 
-	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
+	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "students/createOrUpdateOwnerForm";
 
-	private final OwnerRepository owners;
+	private final StudentRepository students;
 
-	private VisitRepository visits;
+	private LessonRepository lessons;
 
-	public OwnerController(OwnerRepository clinicService, VisitRepository visits) {
-		this.owners = clinicService;
-		this.visits = visits;
+	public StudentController(StudentRepository students, LessonRepository lessons) {
+		this.students = students;
+		this.lessons = lessons;
 	}
 
 	@InitBinder
@@ -56,74 +56,74 @@ class OwnerController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	@GetMapping("/owners/new")
+	@GetMapping("/students/new")
 	public String initCreationForm(Map<String, Object> model) {
-		Owner owner = new Owner();
+		Student owner = new Student();
 		model.put("owner", owner);
 		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/owners/new")
-	public String processCreationForm(@Valid Owner owner, BindingResult result) {
+	@PostMapping("/students/new")
+	public String processCreationForm(@Valid Student owner, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.owners.save(owner);
-			return "redirect:/owners/" + owner.getId();
+			this.students.save(owner);
+			return "redirect:/students/" + owner.getId();
 		}
 	}
 
-	@GetMapping("/owners/find")
+	@GetMapping("/students/find")
 	public String initFindForm(Map<String, Object> model) {
-		model.put("owner", new Owner());
-		return "owners/findOwners";
+		model.put("owner", new Student());
+		return "students/findOwners";
 	}
 
-	@GetMapping("/owners")
-	public String processFindForm(Owner owner, BindingResult result, Map<String, Object> model) {
+	@GetMapping("/students")
+	public String processFindForm(Student owner, BindingResult result, Map<String, Object> model) {
 
-		// allow parameterless GET request for /owners to return all records
+		// allow parameterless GET request for /students to return all records
 		if (owner.getLastName() == null) {
 			owner.setLastName(""); // empty string signifies broadest possible search
 		}
 
-		// find owners by last name
-		Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+		// find students by last name
+		Collection<Student> results = this.students.findByLastName(owner.getLastName());
 		if (results.isEmpty()) {
-			// no owners found
+			// no students found
 			result.rejectValue("lastName", "notFound", "not found");
-			return "owners/findOwners";
+			return "students/findOwners";
 		}
 		else if (results.size() == 1) {
 			// 1 owner found
 			owner = results.iterator().next();
-			return "redirect:/owners/" + owner.getId();
+			return "redirect:/students/" + owner.getId();
 		}
 		else {
-			// multiple owners found
+			// multiple students found
 			model.put("selections", results);
-			return "owners/ownersList";
+			return "students/ownersList";
 		}
 	}
 
-	@GetMapping("/owners/{ownerId}/edit")
+	@GetMapping("/students/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("ownerId") int ownerId, Model model) {
-		Owner owner = this.owners.findById(ownerId);
+		Student owner = this.students.findById(ownerId);
 		model.addAttribute(owner);
 		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/owners/{ownerId}/edit")
-	public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result,
+	@PostMapping("/students/{ownerId}/edit")
+	public String processUpdateOwnerForm(@Valid Student owner, BindingResult result,
 			@PathVariable("ownerId") int ownerId) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			owner.setId(ownerId);
-			this.owners.save(owner);
-			return "redirect:/owners/{ownerId}";
+			this.students.save(owner);
+			return "redirect:/students/{ownerId}";
 		}
 	}
 
@@ -132,12 +132,12 @@ class OwnerController {
 	 * @param ownerId the ID of the owner to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@GetMapping("/owners/{ownerId}")
+	@GetMapping("/students/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
-		ModelAndView mav = new ModelAndView("owners/ownerDetails");
-		Owner owner = this.owners.findById(ownerId);
-		for (Pet pet : owner.getPets()) {
-			pet.setVisitsInternal(visits.findByPetId(pet.getId()));
+		ModelAndView mav = new ModelAndView("students/ownerDetails");
+		Student owner = this.students.findById(ownerId);
+		for (Subject pet : owner.getPets()) {
+			pet.setVisitsInternal(lessons.findByPetId(pet.getId()));
 		}
 		mav.addObject(owner);
 		return mav;

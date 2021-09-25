@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.owner;
+package school.student;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import school.lesson.Lesson;
 import school.model.NamedEntity;
-import school.visit.Visit;
 
 /**
  * Simple business object representing a pet.
@@ -46,8 +46,10 @@ import school.visit.Visit;
  * @author Sam Brannen
  */
 @Entity
-@Table(name = "pets")
-public class Pet extends NamedEntity {
+@Table(name = "subject")
+public class Subject extends NamedEntity {
+
+	private static final long serialVersionUID = -1293065869305310710L;
 
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -55,14 +57,14 @@ public class Pet extends NamedEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "type_id")
-	private PetType type;
+	private SubjectType type;
 
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
-	private Owner owner;
+	private Student owner;
 
 	@Transient
-	private Set<Visit> visits = new LinkedHashSet<>();
+	private Set<Lesson> visits = new LinkedHashSet<>();
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
@@ -72,40 +74,40 @@ public class Pet extends NamedEntity {
 		return this.birthDate;
 	}
 
-	public PetType getType() {
+	public SubjectType getType() {
 		return this.type;
 	}
 
-	public void setType(PetType type) {
+	public void setType(SubjectType type) {
 		this.type = type;
 	}
 
-	public Owner getOwner() {
+	public Student getOwner() {
 		return this.owner;
 	}
 
-	protected void setOwner(Owner owner) {
+	protected void setOwner(Student owner) {
 		this.owner = owner;
 	}
 
-	protected Set<Visit> getVisitsInternal() {
+	protected Set<Lesson> getVisitsInternal() {
 		if (this.visits == null) {
 			this.visits = new HashSet<>();
 		}
 		return this.visits;
 	}
 
-	protected void setVisitsInternal(Collection<Visit> visits) {
+	public void setVisitsInternal(Collection<Lesson> visits) {
 		this.visits = new LinkedHashSet<>(visits);
 	}
 
-	public List<Visit> getVisits() {
-		List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
+	public List<Lesson> getVisits() {
+		List<Lesson> sortedVisits = new ArrayList<>(getVisitsInternal());
 		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
 		return Collections.unmodifiableList(sortedVisits);
 	}
 
-	public void addVisit(Visit visit) {
+	public void addVisit(Lesson visit) {
 		getVisitsInternal().add(visit);
 		visit.setPetId(this.getId());
 	}

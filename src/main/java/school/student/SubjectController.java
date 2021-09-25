@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.owner;
+package school.student;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,28 +31,28 @@ import java.util.Collection;
  * @author Arjen Poutsma
  */
 @Controller
-@RequestMapping("/owners/{ownerId}")
-class PetController {
+@RequestMapping("/students/{ownerId}")
+class SubjectController {
 
-	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
+	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "subjects/createOrUpdatePetForm";
 
-	private final PetRepository pets;
+	private final SubjectRepository subjects;
 
-	private final OwnerRepository owners;
+	private final StudentRepository students;
 
-	public PetController(PetRepository pets, OwnerRepository owners) {
-		this.pets = pets;
-		this.owners = owners;
+	public SubjectController(SubjectRepository subjects, StudentRepository students) {
+		this.subjects = subjects;
+		this.students = students;
 	}
 
 	@ModelAttribute("types")
-	public Collection<PetType> populatePetTypes() {
-		return this.pets.findPetTypes();
+	public Collection<SubjectType> populatePetTypes() {
+		return this.subjects.findPetTypes();
 	}
 
 	@ModelAttribute("owner")
-	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-		return this.owners.findById(ownerId);
+	public Student findOwner(@PathVariable("ownerId") int ownerId) {
+		return this.students.findById(ownerId);
 	}
 
 	@InitBinder("owner")
@@ -62,19 +62,19 @@ class PetController {
 
 	@InitBinder("pet")
 	public void initPetBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new PetValidator());
+		dataBinder.setValidator(new SubjectValidator());
 	}
 
-	@GetMapping("/pets/new")
-	public String initCreationForm(Owner owner, ModelMap model) {
-		Pet pet = new Pet();
+	@GetMapping("/subjects/new")
+	public String initCreationForm(Student owner, ModelMap model) {
+		Subject pet = new Subject();
 		owner.addPet(pet);
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/pets/new")
-	public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
+	@PostMapping("/subjects/new")
+	public String processCreationForm(Student owner, @Valid Subject pet, BindingResult result, ModelMap model) {
 		if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
 			result.rejectValue("name", "duplicate", "already exists");
 		}
@@ -84,20 +84,20 @@ class PetController {
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.pets.save(pet);
-			return "redirect:/owners/{ownerId}";
+			this.subjects.save(pet);
+			return "redirect:/students/{ownerId}";
 		}
 	}
 
-	@GetMapping("/pets/{petId}/edit")
+	@GetMapping("/subjects/{petId}/edit")
 	public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
-		Pet pet = this.pets.findById(petId);
+		Subject pet = this.subjects.findById(petId);
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/pets/{petId}/edit")
-	public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model) {
+	@PostMapping("/subjects/{petId}/edit")
+	public String processUpdateForm(@Valid Subject pet, BindingResult result, Student owner, ModelMap model) {
 		if (result.hasErrors()) {
 			pet.setOwner(owner);
 			model.put("pet", pet);
@@ -105,8 +105,8 @@ class PetController {
 		}
 		else {
 			owner.addPet(pet);
-			this.pets.save(pet);
-			return "redirect:/owners/{ownerId}";
+			this.subjects.save(pet);
+			return "redirect:/students/{ownerId}";
 		}
 	}
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.vet;
+package school.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +23,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Simple domain object representing a list of veterinarians. Mostly here to be used for
- * the 'vets' {@link org.springframework.web.servlet.view.xml.MarshallingView}.
+ * the 'teachers' {@link org.springframework.web.servlet.view.xml.MarshallingView}.
  *
  * @author Arjen Poutsma
  */
 @XmlRootElement
-public class Vets {
+public class Teachers {
 
-	private List<Vet> vets;
+	private List<Teacher> teachers;
 
 	@XmlElement
-	public List<Vet> getVetList() {
-		if (vets == null) {
-			vets = new ArrayList<>();
+	public List<Teacher> getVetList() {
+		if (teachers == null) {
+			teachers = new ArrayList<>();
 		}
-		return vets;
+		return teachers;
 	}
 
 }

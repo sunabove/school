@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.owner;
+package school.student;
 
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * <code>Validator</code> for <code>Pet</code> forms.
+ * <code>Validator</code> for <code>Subject</code> forms.
  * <p>
  * We're not using Bean Validation annotations here because it is easier to define such
  * validation rule in Java.
@@ -29,13 +29,13 @@ import org.springframework.validation.Validator;
  * @author Ken Krebs
  * @author Juergen Hoeller
  */
-public class PetValidator implements Validator {
+public class SubjectValidator implements Validator {
 
 	private static final String REQUIRED = "required";
 
 	@Override
 	public void validate(Object obj, Errors errors) {
-		Pet pet = (Pet) obj;
+		Subject pet = (Subject) obj;
 		String name = pet.getName();
 		// name validation
 		if (!StringUtils.hasLength(name)) {
@@ -54,11 +54,11 @@ public class PetValidator implements Validator {
 	}
 
 	/**
-	 * This Validator validates *just* Pet instances
+	 * This Validator validates *just* Subject instances
 	 */
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Pet.class.isAssignableFrom(clazz);
+		return Subject.class.isAssignableFrom(clazz);
 	}
 
 }

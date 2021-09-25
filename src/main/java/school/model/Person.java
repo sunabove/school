@@ -19,13 +19,9 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
-/**
- * Simple JavaBean domain object representing an person.
- *
- * @author Ken Krebs
- */
 @MappedSuperclass
 public class Person extends BaseEntity {
+	private static final long serialVersionUID = -7823916802991678907L;
 
 	@Column(name = "first_name")
 	@NotEmpty
@@ -35,6 +31,7 @@ public class Person extends BaseEntity {
 	@NotEmpty
 	private String lastName;
 	
+	@Column(name = "age")
 	private Integer age;
 
 	public String getFirstName() {

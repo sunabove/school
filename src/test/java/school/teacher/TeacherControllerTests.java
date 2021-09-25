@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package school.vet;
+package school.teacher;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,30 +34,30 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import school.vet.Specialty;
-import school.vet.Vet;
-import school.vet.VetController;
-import school.vet.VetRepository;
+import school.teacher.Specialty;
+import school.teacher.Teacher;
+import school.teacher.TeacherController;
+import school.teacher.TeacherRepository;
 
 /**
- * Test class for the {@link VetController}
+ * Test class for the {@link TeacherController}
  */
-@WebMvcTest(VetController.class)
-class VetControllerTests {
+@WebMvcTest(TeacherController.class)
+class TeacherControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
-	private VetRepository vets;
+	private TeacherRepository vets;
 
 	@BeforeEach
 	void setup() {
-		Vet james = new Vet();
+		Teacher james = new Teacher();
 		james.setFirstName("James");
 		james.setLastName("Carter");
 		james.setId(1);
-		Vet helen = new Vet();
+		Teacher helen = new Teacher();
 		helen.setFirstName("Helen");
 		helen.setLastName("Leary");
 		helen.setId(2);

@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.owner;
+package school.student;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import school.model.NamedEntity;
 
-/**
- * @author Juergen Hoeller Can be Cat, Dog, Hamster...
- */
 @Entity
 @Table(name = "types")
-public class PetType extends NamedEntity {
+public class SubjectType extends NamedEntity {
+
+	private static final long serialVersionUID = -1292475497535377996L;
+	
+	public SubjectType() {
+	}
 
 }

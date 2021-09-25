@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package school.owner;
+package school.student;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,22 +33,22 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import school.owner.Owner;
-import school.owner.OwnerRepository;
-import school.owner.Pet;
-import school.owner.PetController;
-import school.owner.PetRepository;
-import school.owner.PetType;
-import school.owner.PetTypeFormatter;
+import school.student.Student;
+import school.student.StudentRepository;
+import school.student.Subject;
+import school.student.SubjectController;
+import school.student.SubjectRepository;
+import school.student.SubjectType;
+import school.student.SubjectTypeFormatter;
 
 /**
- * Test class for the {@link PetController}
+ * Test class for the {@link SubjectController}
  *
  * @author Colin But
  */
-@WebMvcTest(value = PetController.class,
-		includeFilters = @ComponentScan.Filter(value = PetTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE))
-class PetControllerTests {
+@WebMvcTest(value = SubjectController.class,
+		includeFilters = @ComponentScan.Filter(value = SubjectTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE))
+class SubjectControllerTests {
 
 	private static final int TEST_OWNER_ID = 1;
 
@@ -58,19 +58,19 @@ class PetControllerTests {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private PetRepository pets;
+	private SubjectRepository pets;
 
 	@MockBean
-	private OwnerRepository owners;
+	private StudentRepository owners;
 
 	@BeforeEach
 	void setup() {
-		PetType cat = new PetType();
+		SubjectType cat = new SubjectType();
 		cat.setId(3);
 		cat.setName("hamster");
 		given(this.pets.findPetTypes()).willReturn(Lists.newArrayList(cat));
-		given(this.owners.findById(TEST_OWNER_ID)).willReturn(new Owner());
-		given(this.pets.findById(TEST_PET_ID)).willReturn(new Pet());
+		given(this.owners.findById(TEST_OWNER_ID)).willReturn(new Student());
+		given(this.pets.findById(TEST_PET_ID)).willReturn(new Subject());
 
 	}
 

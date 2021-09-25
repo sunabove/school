@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.vet;
+package school.teacher;
 
 import java.io.Serializable;
 
@@ -23,12 +23,18 @@ import javax.persistence.Table;
 import school.model.NamedEntity;
 
 /**
- * Models a {@link Vet Vet's} specialty (for example, dentistry).
+ * Models a {@link Teacher Teacher's} specialty (for example, dentistry).
  *
  * @author Juergen Hoeller
  */
 @Entity
-@Table(name = "specialties")
+@Table(name = "specialty")
 public class Specialty extends NamedEntity implements Serializable {
+
+	private static final long serialVersionUID = -8685670132517294071L;
+	
+	public Specialty() {
+		
+	}
 
 }

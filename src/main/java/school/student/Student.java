@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.owner;
+package school.student;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,17 +35,11 @@ import org.springframework.core.style.ToStringCreator;
 
 import school.model.Person;
 
-/**
- * Simple JavaBean domain object representing an owner.
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Michael Isvy
- */
 @Entity
-@Table(name = "owners")
-public class Owner extends Person {
+@Table(name = "student")
+public class Student extends Person {
+
+	private static final long serialVersionUID = -3671537316506604942L;
 
 	@Column(name = "address")
 	@NotEmpty
@@ -61,7 +55,7 @@ public class Owner extends Person {
 	private String telephone;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-	private Set<Pet> pets;
+	private Set<Subject> pets;
 
 	public String getAddress() {
 		return this.address;
@@ -87,24 +81,24 @@ public class Owner extends Person {
 		this.telephone = telephone;
 	}
 
-	protected Set<Pet> getPetsInternal() {
+	protected Set<Subject> getPetsInternal() {
 		if (this.pets == null) {
 			this.pets = new HashSet<>();
 		}
 		return this.pets;
 	}
 
-	protected void setPetsInternal(Set<Pet> pets) {
+	protected void setPetsInternal(Set<Subject> pets) {
 		this.pets = pets;
 	}
 
-	public List<Pet> getPets() {
-		List<Pet> sortedPets = new ArrayList<>(getPetsInternal());
+	public List<Subject> getPets() {
+		List<Subject> sortedPets = new ArrayList<>(getPetsInternal());
 		PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
 		return Collections.unmodifiableList(sortedPets);
 	}
 
-	public void addPet(Pet pet) {
+	public void addPet(Subject pet) {
 		if (pet.isNew()) {
 			getPetsInternal().add(pet);
 		}
@@ -112,22 +106,22 @@ public class Owner extends Person {
 	}
 
 	/**
-	 * Return the Pet with the given name, or null if none found for this Owner.
+	 * Return the Subject with the given name, or null if none found for this Student.
 	 * @param name to test
 	 * @return true if pet name is already in use
 	 */
-	public Pet getPet(String name) {
+	public Subject getPet(String name) {
 		return getPet(name, false);
 	}
 
 	/**
-	 * Return the Pet with the given name, or null if none found for this Owner.
+	 * Return the Subject with the given name, or null if none found for this Student.
 	 * @param name to test
 	 * @return true if pet name is already in use
 	 */
-	public Pet getPet(String name, boolean ignoreNew) {
+	public Subject getPet(String name, boolean ignoreNew) {
 		name = name.toLowerCase();
-		for (Pet pet : getPetsInternal()) {
+		for (Subject pet : getPetsInternal()) {
 			if (!ignoreNew || !pet.isNew()) {
 				String compName = pet.getName();
 				compName = compName.toLowerCase();

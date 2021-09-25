@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.vet;
+package school.teacher;
 
 import java.util.Collection;
 
@@ -22,25 +22,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Repository class for <code>Vet</code> domain objects All method names are compliant
- * with Spring Data naming conventions so this interface can easily be extended for Spring
- * Data. See:
- * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Michael Isvy
- */
-public interface VetRepository extends Repository<Vet, Integer> {
+public interface TeacherRepository extends Repository<Teacher, Integer> {
 
 	/**
-	 * Retrieve all <code>Vet</code>s from the data store.
-	 * @return a <code>Collection</code> of <code>Vet</code>s
+	 * Retrieve all <code>Teacher</code>s from the data store.
+	 * @return a <code>Collection</code> of <code>Teacher</code>s
 	 */
 	@Transactional(readOnly = true)
-	@Cacheable("vets")
-	Collection<Vet> findAll() throws DataAccessException;
+	@Cacheable("teachers")
+	Collection<Teacher> findAll() throws DataAccessException;
 
 }

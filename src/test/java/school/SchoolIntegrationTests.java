@@ -20,18 +20,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import school.vet.VetRepository;
+import school.teacher.TeacherRepository;
 
 @SpringBootTest
-class PetclinicIntegrationTests {
+class SchoolIntegrationTests {
 
 	@Autowired
-	private VetRepository vets;
+	private TeacherRepository teachers;
 
 	@Test
 	void testFindAll() throws Exception {
-		vets.findAll();
-		vets.findAll(); // served from cache
+		teachers.findAll();
+		teachers.findAll(); // served from cache
 	}
 
 }

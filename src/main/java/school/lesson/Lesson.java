@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.visit;
+package school.lesson;
 
 import java.time.LocalDate;
 
@@ -34,32 +34,32 @@ import school.model.BaseEntity;
  */
 @Entity
 @Table(name = "visits")
-public class Visit extends BaseEntity {
+public class Lesson extends BaseEntity {
 
 	@Column(name = "visit_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate date;
+	private LocalDate visitDate;
 
 	@NotEmpty
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "pet_id")
-	private Integer petId;
+	@Column(name = "subject_id")
+	private Integer subjectId;
 
 	/**
-	 * Creates a new instance of Visit for the current date
+	 * Creates a new instance of Lesson for the current visitDate
 	 */
-	public Visit() {
-		this.date = LocalDate.now();
+	public Lesson() {
+		this.visitDate = LocalDate.now();
 	}
 
 	public LocalDate getDate() {
-		return this.date;
+		return this.visitDate;
 	}
 
 	public void setDate(LocalDate date) {
-		this.date = date;
+		this.visitDate = date;
 	}
 
 	public String getDescription() {
@@ -71,11 +71,11 @@ public class Visit extends BaseEntity {
 	}
 
 	public Integer getPetId() {
-		return this.petId;
+		return this.subjectId;
 	}
 
 	public void setPetId(Integer petId) {
-		this.petId = petId;
+		this.subjectId = petId;
 	}
 
 }

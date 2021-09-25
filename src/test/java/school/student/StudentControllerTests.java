@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package school.owner;
+package school.student;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -30,13 +30,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import school.owner.Owner;
-import school.owner.OwnerController;
-import school.owner.OwnerRepository;
-import school.owner.Pet;
-import school.owner.PetType;
-import school.visit.Visit;
-import school.visit.VisitRepository;
+import school.lesson.Lesson;
+import school.lesson.LessonRepository;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasProperty;
@@ -50,12 +45,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 /**
- * Test class for {@link OwnerController}
+ * Test class for {@link StudentController}
  *
  * @author Colin But
  */
-@WebMvcTest(OwnerController.class)
-class OwnerControllerTests {
+@WebMvcTest(StudentController.class)
+class StudentControllerTests {
 
 	private static final int TEST_OWNER_ID = 1;
 
@@ -63,24 +58,24 @@ class OwnerControllerTests {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private OwnerRepository owners;
+	private StudentRepository owners;
 
 	@MockBean
-	private VisitRepository visits;
+	private LessonRepository visits;
 
-	private Owner george;
+	private Student george;
 
 	@BeforeEach
 	void setup() {
-		george = new Owner();
+		george = new Student();
 		george.setId(TEST_OWNER_ID);
 		george.setFirstName("George");
 		george.setLastName("Franklin");
 		george.setAddress("110 W. Liberty St.");
 		george.setCity("Madison");
 		george.setTelephone("6085551023");
-		Pet max = new Pet();
-		PetType dog = new PetType();
+		Subject max = new Subject();
+		SubjectType dog = new SubjectType();
 		dog.setName("dog");
 		max.setId(1);
 		max.setType(dog);
@@ -88,7 +83,7 @@ class OwnerControllerTests {
 		max.setBirthDate(LocalDate.now());
 		george.setPetsInternal(Collections.singleton(max));
 		given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
-		Visit visit = new Visit();
+		Lesson visit = new Lesson();
 		visit.setDate(LocalDate.now());
 		given(this.visits.findByPetId(max.getId())).willReturn(Collections.singletonList(visit));
 	}
@@ -124,7 +119,7 @@ class OwnerControllerTests {
 
 	@Test
 	void testProcessFindFormSuccess() throws Exception {
-		given(this.owners.findByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
+		given(this.owners.findByLastName("")).willReturn(Lists.newArrayList(george, new Student()));
 		mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"));
 	}
 
@@ -182,13 +177,13 @@ class OwnerControllerTests {
 				.andExpect(model().attribute("owner", hasProperty("city", is("Madison"))))
 				.andExpect(model().attribute("owner", hasProperty("telephone", is("6085551023"))))
 				.andExpect(model().attribute("owner", hasProperty("pets", not(empty()))))
-				.andExpect(model().attribute("owner", hasProperty("pets", new BaseMatcher<List<Pet>>() {
+				.andExpect(model().attribute("owner", hasProperty("pets", new BaseMatcher<List<Subject>>() {
 
 					@Override
 					public boolean matches(Object item) {
 						@SuppressWarnings("unchecked")
-						List<Pet> pets = (List<Pet>) item;
-						Pet pet = pets.get(0);
+						List<Subject> pets = (List<Subject>) item;
+						Subject pet = pets.get(0);
 						if (pet.getVisits().isEmpty()) {
 							return false;
 						}

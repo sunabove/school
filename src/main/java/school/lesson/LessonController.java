@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package school.owner;
+package school.lesson;
 
 import java.util.Map;
 
@@ -28,26 +28,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import school.visit.Visit;
-import school.visit.VisitRepository;
+import school.student.Subject;
+import school.student.SubjectRepository;
 
-/**
- * @author Juergen Hoeller
- * @author Ken Krebs
- * @author Arjen Poutsma
- * @author Michael Isvy
- * @author Dave Syer
- */
 @Controller
-class VisitController {
+public class LessonController {
 
-	private final VisitRepository visits;
+	private final LessonRepository lessons;
 
-	private final PetRepository pets;
+	private final SubjectRepository subjects;
 
-	public VisitController(VisitRepository visits, PetRepository pets) {
-		this.visits = visits;
-		this.pets = pets;
+	public LessonController(LessonRepository lessons, SubjectRepository subjects) {
+		this.lessons = lessons;
+		this.subjects = subjects;
 	}
 
 	@InitBinder
@@ -58,34 +51,34 @@ class VisitController {
 	/**
 	 * Called before each and every @RequestMapping annotated method. 2 goals: - Make sure
 	 * we always have fresh data - Since we do not use the session scope, make sure that
-	 * Pet object always has an id (Even though id is not part of the form fields)
+	 * Subject object always has an id (Even though id is not part of the form fields)
 	 * @param petId
-	 * @return Pet
+	 * @return Subject
 	 */
 	@ModelAttribute("visit")
-	public Visit loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
-		Pet pet = this.pets.findById(petId);
-		pet.setVisitsInternal(this.visits.findByPetId(petId));
+	public Lesson loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
+		Subject pet = this.subjects.findById(petId);
+		pet.setVisitsInternal(this.lessons.findByPetId(petId));
 		model.put("pet", pet);
-		Visit visit = new Visit();
+		Lesson visit = new Lesson();
 		pet.addVisit(visit);
 		return visit;
 	}
 
 	// Spring MVC calls method loadPetWithVisit(...) before initNewVisitForm is called
-	@GetMapping("/owners/*/pets/{petId}/visits/new")
+	@GetMapping("/owners/*/subjects/{petId}/lessons/new")
 	public String initNewVisitForm(@PathVariable("petId") int petId, Map<String, Object> model) {
-		return "pets/createOrUpdateVisitForm";
+		return "subjects/createOrUpdateVisitForm";
 	}
 
 	// Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
-	@PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
-	public String processNewVisitForm(@Valid Visit visit, BindingResult result) {
+	@PostMapping("/owners/{ownerId}/subjects/{petId}/lessons/new")
+	public String processNewVisitForm(@Valid Lesson visit, BindingResult result) {
 		if (result.hasErrors()) {
-			return "pets/createOrUpdateVisitForm";
+			return "subjects/createOrUpdateVisitForm";
 		}
 		else {
-			this.visits.save(visit);
+			this.lessons.save(visit);
 			return "redirect:/owners/{ownerId}";
 		}
 	}
