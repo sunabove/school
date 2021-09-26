@@ -24,16 +24,12 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.Data;
 import school.model.BaseEntity;
 
-/**
- * Simple JavaBean domain object representing a visit.
- *
- * @author Ken Krebs
- * @author Dave Syer
- */
 @Entity
-@Table(name = "visits")
+@Table(name = "lesson")
+@Data
 public class Lesson extends BaseEntity {
 
 	@Column(name = "visit_date")
@@ -52,30 +48,6 @@ public class Lesson extends BaseEntity {
 	 */
 	public Lesson() {
 		this.visitDate = LocalDate.now();
-	}
-
-	public LocalDate getDate() {
-		return this.visitDate;
-	}
-
-	public void setDate(LocalDate date) {
-		this.visitDate = date;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Integer getPetId() {
-		return this.subjectId;
-	}
-
-	public void setPetId(Integer petId) {
-		this.subjectId = petId;
-	}
+	} 
 
 }

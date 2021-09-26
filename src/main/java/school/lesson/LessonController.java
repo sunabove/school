@@ -58,7 +58,7 @@ public class LessonController {
 	@ModelAttribute("visit")
 	public Lesson loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
 		Subject pet = this.subjects.findById(petId);
-		pet.setVisitsInternal(this.lessons.findByPetId(petId));
+		pet.setVisitsInternal(this.lessons.findBySubjectId(petId));
 		model.put("pet", pet);
 		Lesson visit = new Lesson();
 		pet.addVisit(visit);

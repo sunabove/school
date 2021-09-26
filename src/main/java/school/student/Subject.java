@@ -38,13 +38,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import school.lesson.Lesson;
 import school.model.NamedEntity;
 
-/**
- * Simple business object representing a pet.
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- */
 @Entity
 @Table(name = "subject")
 public class Subject extends NamedEntity {

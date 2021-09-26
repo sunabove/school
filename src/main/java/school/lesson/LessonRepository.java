@@ -20,12 +20,10 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
 
-import school.model.BaseEntity;
-
 public interface LessonRepository extends Repository<Lesson, Integer> {
 
 	void save(Lesson visit) throws DataAccessException;
 
-	List<Lesson> findByPetId(Integer petId);
+	List<Lesson> findBySubjectId(Integer subjectId);
 
 }
