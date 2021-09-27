@@ -35,7 +35,7 @@ import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import school.lesson.Lesson;
+import school.lesson.Lecture;
 import school.model.NamedEntity;
 
 @Entity
@@ -57,7 +57,7 @@ public class Subject extends NamedEntity {
 	private Student owner;
 
 	@Transient
-	private Set<Lesson> visits = new LinkedHashSet<>();
+	private Set<Lecture> visits = new LinkedHashSet<>();
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
@@ -83,24 +83,24 @@ public class Subject extends NamedEntity {
 		this.owner = owner;
 	}
 
-	protected Set<Lesson> getVisitsInternal() {
+	protected Set<Lecture> getVisitsInternal() {
 		if (this.visits == null) {
 			this.visits = new HashSet<>();
 		}
 		return this.visits;
 	}
 
-	public void setVisitsInternal(Collection<Lesson> visits) {
+	public void setVisitsInternal(Collection<Lecture> visits) {
 		this.visits = new LinkedHashSet<>(visits);
 	}
 
-	public List<Lesson> getVisits() {
-		List<Lesson> sortedVisits = new ArrayList<>(getVisitsInternal());
+	public List<Lecture> getVisits() {
+		List<Lecture> sortedVisits = new ArrayList<>(getVisitsInternal());
 		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
 		return Collections.unmodifiableList(sortedVisits);
 	}
 
-	public void addVisit(Lesson lesson) {
+	public void addVisit(Lecture lesson) {
 		getVisitsInternal().add(lesson);
 		lesson.setSubjectId(this.getId());
 	}

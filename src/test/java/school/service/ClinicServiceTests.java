@@ -28,8 +28,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import school.lesson.Lesson;
-import school.lesson.LessonRepository;
+import school.lesson.Lecture;
+import school.lesson.LectureRepository;
 import school.student.Student;
 import school.student.StudentRepository;
 import school.student.Subject;
@@ -77,7 +77,7 @@ class ClinicServiceTests {
 	protected SubjectRepository pets;
 
 	@Autowired
-	protected LessonRepository visits;
+	protected LectureRepository visits;
 
 	@Autowired
 	protected TeacherRepository vets;
@@ -205,7 +205,7 @@ class ClinicServiceTests {
 	void shouldAddNewVisitForPet() {
 		Subject pet7 = this.pets.findById(7);
 		int found = pet7.getVisits().size();
-		Lesson visit = new Lesson();
+		Lecture visit = new Lecture();
 		pet7.addVisit(visit);
 		visit.setDescription("test");
 		this.visits.save(visit);
@@ -218,9 +218,9 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
-		Collection<Lesson> visits = this.visits.findBySubjectId(7);
+		Collection<Lecture> visits = this.visits.findBySubjectId(7);
 		assertThat(visits).hasSize(2);
-		Lesson[] visitArr = visits.toArray(new Lesson[visits.size()]);
+		Lecture[] visitArr = visits.toArray(new Lecture[visits.size()]);
 		assertThat(visitArr[0].getDate()).isNotNull();
 		assertThat(visitArr[0].getSubjectId()).isEqualTo(7);
 	}

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import school.lesson.LessonRepository;
+import school.lesson.LectureRepository;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -44,9 +44,9 @@ class StudentController {
 
 	private final StudentRepository students;
 
-	private LessonRepository lessons;
+	private LectureRepository lessons;
 
-	public StudentController(StudentRepository students, LessonRepository lessons) {
+	public StudentController(StudentRepository students, LectureRepository lessons) {
 		this.students = students;
 		this.lessons = lessons;
 	}

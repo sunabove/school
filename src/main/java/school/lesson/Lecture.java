@@ -13,9 +13,9 @@ import lombok.Data;
 import school.model.BaseEntity;
 
 @Entity
-@Table(name = "lesson")
+@Table(name = "lecture")
 @Data
-public class Lesson extends BaseEntity {
+public class Lecture extends BaseEntity {
 
 	private static final long serialVersionUID = 5857476193395691627L;
 
@@ -31,9 +31,9 @@ public class Lesson extends BaseEntity {
 	private Integer subjectId;
 
 	/**
-	 * Creates a new instance of Lesson for the current visitDate
+	 * Creates a new instance of Lecture for the current visitDate
 	 */
-	public Lesson() {
+	public Lecture() {
 		this.date = LocalDate.now();
 	} 
 

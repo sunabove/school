@@ -30,8 +30,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import school.lesson.Lesson;
-import school.lesson.LessonRepository;
+import school.lesson.Lecture;
+import school.lesson.LectureRepository;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasProperty;
@@ -61,7 +61,7 @@ class StudentControllerTests {
 	private StudentRepository owners;
 
 	@MockBean
-	private LessonRepository visits;
+	private LectureRepository visits;
 
 	private Student george;
 
@@ -83,7 +83,7 @@ class StudentControllerTests {
 		max.setBirthDate(LocalDate.now());
 		george.setPetsInternal(Collections.singleton(max));
 		given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
-		Lesson visit = new Lesson();
+		Lecture visit = new Lecture();
 		visit.setDate(LocalDate.now());
 		given(this.visits.findBySubjectId(max.getId())).willReturn(Collections.singletonList(visit));
 	}

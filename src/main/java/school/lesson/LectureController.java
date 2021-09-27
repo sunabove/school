@@ -32,13 +32,13 @@ import school.student.Subject;
 import school.student.SubjectRepository;
 
 @Controller
-public class LessonController {
+public class LectureController {
 
-	private final LessonRepository lessons;
+	private final LectureRepository lessons;
 
 	private final SubjectRepository subjects;
 
-	public LessonController(LessonRepository lessons, SubjectRepository subjects) {
+	public LectureController(LectureRepository lessons, SubjectRepository subjects) {
 		this.lessons = lessons;
 		this.subjects = subjects;
 	}
@@ -56,11 +56,11 @@ public class LessonController {
 	 * @return Subject
 	 */
 	@ModelAttribute("visit")
-	public Lesson loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
+	public Lecture loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
 		Subject pet = this.subjects.findById(petId);
 		pet.setVisitsInternal(this.lessons.findBySubjectId(petId));
 		model.put("pet", pet);
-		Lesson visit = new Lesson();
+		Lecture visit = new Lecture();
 		pet.addVisit(visit);
 		return visit;
 	}
@@ -73,7 +73,7 @@ public class LessonController {
 
 	// Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
 	@PostMapping("/owners/{ownerId}/subjects/{petId}/lessons/new")
-	public String processNewVisitForm(@Valid Lesson visit, BindingResult result) {
+	public String processNewVisitForm(@Valid Lecture visit, BindingResult result) {
 		if (result.hasErrors()) {
 			return "subjects/createOrUpdateVisitForm";
 		}
