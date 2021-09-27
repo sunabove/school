@@ -137,7 +137,7 @@ class StudentController {
 		ModelAndView mav = new ModelAndView("students/ownerDetails");
 		Student owner = this.students.findById(ownerId);
 		for (Subject pet : owner.getPets()) {
-			pet.setVisitsInternal(lessons.findByPetId(pet.getId()));
+			pet.setVisitsInternal(lessons.findBySubjectId(pet.getId()));
 		}
 		mav.addObject(owner);
 		return mav;

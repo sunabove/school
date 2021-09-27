@@ -100,9 +100,9 @@ public class Subject extends NamedEntity {
 		return Collections.unmodifiableList(sortedVisits);
 	}
 
-	public void addVisit(Lesson visit) {
-		getVisitsInternal().add(visit);
-		visit.setPetId(this.getId());
+	public void addVisit(Lesson lesson) {
+		getVisitsInternal().add(lesson);
+		lesson.setSubjectId(this.getId());
 	}
 
 }

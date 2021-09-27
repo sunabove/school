@@ -85,7 +85,7 @@ class StudentControllerTests {
 		given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
 		Lesson visit = new Lesson();
 		visit.setDate(LocalDate.now());
-		given(this.visits.findByPetId(max.getId())).willReturn(Collections.singletonList(visit));
+		given(this.visits.findBySubjectId(max.getId())).willReturn(Collections.singletonList(visit));
 	}
 
 	@Test
