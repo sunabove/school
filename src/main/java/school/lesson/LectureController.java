@@ -66,20 +66,20 @@ public class LectureController {
 	}
 
 	// Spring MVC calls method loadPetWithVisit(...) before initNewVisitForm is called
-	@GetMapping("/owners/*/subjects/{petId}/lessons/new")
+	@GetMapping("/studentRepository/*/subjects/{petId}/lessons/new")
 	public String initNewVisitForm(@PathVariable("petId") int petId, Map<String, Object> model) {
 		return "subjects/createOrUpdateVisitForm";
 	}
 
 	// Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
-	@PostMapping("/owners/{ownerId}/subjects/{petId}/lessons/new")
+	@PostMapping("/studentRepository/{ownerId}/subjects/{petId}/lessons/new")
 	public String processNewVisitForm(@Valid Lecture visit, BindingResult result) {
 		if (result.hasErrors()) {
 			return "subjects/createOrUpdateVisitForm";
 		}
 		else {
 			this.lessons.save(visit);
-			return "redirect:/owners/{ownerId}";
+			return "redirect:/studentRepository/{ownerId}";
 		}
 	}
 

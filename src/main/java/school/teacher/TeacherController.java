@@ -30,17 +30,17 @@ class TeacherController {
 		this.vets = clinicService;
 	}
 
-	@GetMapping("/vets.html")
+	@GetMapping("/teacherRepository.html")
 	public String showVetList(Map<String, Object> model) {
 		// Here we are returning an object of type 'Teachers' rather than a collection of Teacher
 		// objects so it is simpler for Object-Xml mapping
 		Teachers vets = new Teachers();
 		vets.getVetList().addAll(this.vets.findAll());
-		model.put("vets", vets);
-		return "vets/vetList";
+		model.put("teacherRepository", vets);
+		return "teacherRepository/vetList";
 	}
 
-	@GetMapping({ "/vets" })
+	@GetMapping({ "/teacherRepository" })
 	public @ResponseBody Teachers showResourcesVetList() {
 		// Here we are returning an object of type 'Teachers' rather than a collection of Teacher
 		// objects so it is simpler for JSon/Object mapping

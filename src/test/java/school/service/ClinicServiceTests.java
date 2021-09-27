@@ -1,19 +1,3 @@
-/*
- * Copyright 2012-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package school.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,113 +22,84 @@ import school.student.SubjectType;
 import school.teacher.Teacher;
 import school.teacher.TeacherRepository;
 
-/**
- * Integration test of the Service and the Repository layer.
- * <p>
- * ClinicServiceSpringDataJpaTests subclasses benefit from the following services provided
- * by the Spring TestContext Framework:
- * </p>
- * <ul>
- * <li><strong>Spring IoC container caching</strong> which spares us unnecessary set up
- * time between test execution.</li>
- * <li><strong>Dependency Injection</strong> of test fixture instances, meaning that we
- * don't need to perform application context lookups. See the use of
- * {@link Autowired @Autowired} on the <code>{@link
- * ClinicServiceTests#clinicService clinicService}</code> instance variable, which uses
- * autowiring <em>by type</em>.
- * <li><strong>Transaction management</strong>, meaning each test method is executed in
- * its own transaction, which is automatically rolled back by default. Thus, even if tests
- * insert or otherwise change database state, there is no need for a teardown or cleanup
- * script.
- * <li>An {@link org.springframework.context.ApplicationContext ApplicationContext} is
- * also inherited and can be used for explicit bean lookup if necessary.</li>
- * </ul>
- *
- * @author Ken Krebs
- * @author Rod Johnson
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Michael Isvy
- * @author Dave Syer
- */
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class ClinicServiceTests {
 
 	@Autowired
-	protected StudentRepository owners;
+	protected StudentRepository studentRepository;
 
 	@Autowired
-	protected SubjectRepository pets;
+	protected SubjectRepository subjectRepository;
 
 	@Autowired
-	protected LectureRepository visits;
+	protected LectureRepository lectureRepository;
 
 	@Autowired
-	protected TeacherRepository vets;
+	protected TeacherRepository teacherRepository;
 
 	@Test
 	void shouldFindOwnersByLastName() {
-		Collection<Student> owners = this.owners.findByLastName("Davis");
-		assertThat(owners).hasSize(2);
+		Collection<Student> students = this.studentRepository.findByLastName("Davis");
+		assertThat(students).hasSize(2);
 
-		owners = this.owners.findByLastName("Daviss");
-		assertThat(owners).isEmpty();
+		students = this.studentRepository.findByLastName("Daviss");
+		assertThat(students).isEmpty();
 	}
 
 	@Test
 	void shouldFindSingleOwnerWithPet() {
-		Student owner = this.owners.findById(1);
-		assertThat(owner.getLastName()).startsWith("Franklin");
-		assertThat(owner.getPets()).hasSize(1);
-		assertThat(owner.getPets().get(0).getType()).isNotNull();
-		assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
+		Student student = this.studentRepository.findById(1);
+		assertThat(student.getLastName()).startsWith("Franklin");
+		assertThat(student.getPets()).hasSize(1);
+		assertThat(student.getPets().get(0).getSubjectType()).isNotNull();
+		assertThat(student.getPets().get(0).getSubjectType().getName()).isEqualTo("cat");
 	}
 
 	@Test
 	@Transactional
 	void shouldInsertOwner() {
-		Collection<Student> owners = this.owners.findByLastName("Schultz");
-		int found = owners.size();
+		Collection<Student> students = this.studentRepository.findByLastName("Schultz");
+		int found = students.size();
 
-		Student owner = new Student();
-		owner.setFirstName("Sam");
-		owner.setLastName("Schultz");
-		owner.setAddress("4, Evans Street");
-		owner.setCity("Wollongong");
-		owner.setTelephone("4444444444");
-		this.owners.save(owner);
-		assertThat(owner.getId().longValue()).isNotEqualTo(0);
+		Student student = new Student();
+		student.setFirstName("Sam");
+		student.setLastName("Schultz");
+		student.setAddress("4, Evans Street");
+		student.setCity("Wollongong");
+		student.setTelephone("4444444444");
+		this.studentRepository.save(student);
+		assertThat(student.getId().longValue()).isNotEqualTo(0);
 
-		owners = this.owners.findByLastName("Schultz");
-		assertThat(owners.size()).isEqualTo(found + 1);
+		students = this.studentRepository.findByLastName("Schultz");
+		assertThat(students.size()).isEqualTo(found + 1);
 	}
 
 	@Test
 	@Transactional
 	void shouldUpdateOwner() {
-		Student owner = this.owners.findById(1);
-		String oldLastName = owner.getLastName();
+		Student student = this.studentRepository.findById(1);
+		String oldLastName = student.getLastName();
 		String newLastName = oldLastName + "X";
 
-		owner.setLastName(newLastName);
-		this.owners.save(owner);
+		student.setLastName(newLastName);
+		this.studentRepository.save(student);
 
 		// retrieving new name from database
-		owner = this.owners.findById(1);
-		assertThat(owner.getLastName()).isEqualTo(newLastName);
+		student = this.studentRepository.findById(1);
+		assertThat(student.getLastName()).isEqualTo(newLastName);
 	}
 
 	@Test
 	void shouldFindPetWithCorrectId() {
-		Subject pet7 = this.pets.findById(7);
-		assertThat(pet7.getName()).startsWith("Samantha");
-		assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
+		Subject subject7 = this.subjectRepository.findById(7);
+		assertThat(subject7.getName()).startsWith("Samantha");
+		assertThat(subject7.getOwner().getFirstName()).isEqualTo("Jean");
 
 	}
 
 	@Test
 	void shouldFindAllPetTypes() {
-		Collection<SubjectType> petTypes = this.pets.findPetTypes();
+		Collection<SubjectType> petTypes = this.subjectRepository.findPetTypes();
 
 		SubjectType petType1 = EntityUtils.getById(petTypes, SubjectType.class, 1);
 		assertThat(petType1.getName()).isEqualTo("cat");
@@ -155,21 +110,21 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldInsertPetIntoDatabaseAndGenerateId() {
-		Student owner6 = this.owners.findById(6);
+		Student owner6 = this.studentRepository.findById(6);
 		int found = owner6.getPets().size();
 
 		Subject pet = new Subject();
 		pet.setName("bowser");
-		Collection<SubjectType> types = this.pets.findPetTypes();
-		pet.setType(EntityUtils.getById(types, SubjectType.class, 2));
+		Collection<SubjectType> types = this.subjectRepository.findPetTypes();
+		pet.setSubjectType(EntityUtils.getById(types, SubjectType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		owner6.addPet(pet);
 		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 
-		this.pets.save(pet);
-		this.owners.save(owner6);
+		this.subjectRepository.save(pet);
+		this.studentRepository.save(owner6);
 
-		owner6 = this.owners.findById(6);
+		owner6 = this.studentRepository.findById(6);
 		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 		// checks that id has been generated
 		assertThat(pet.getId()).isNotNull();
@@ -178,20 +133,20 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldUpdatePetName() throws Exception {
-		Subject pet7 = this.pets.findById(7);
+		Subject pet7 = this.subjectRepository.findById(7);
 		String oldName = pet7.getName();
 
 		String newName = oldName + "X";
 		pet7.setName(newName);
-		this.pets.save(pet7);
+		this.subjectRepository.save(pet7);
 
-		pet7 = this.pets.findById(7);
+		pet7 = this.subjectRepository.findById(7);
 		assertThat(pet7.getName()).isEqualTo(newName);
 	}
 
 	@Test
 	void shouldFindVets() {
-		Collection<Teacher> vets = this.vets.findAll();
+		Collection<Teacher> vets = this.teacherRepository.findAll();
 
 		Teacher vet = EntityUtils.getById(vets, Teacher.class, 3);
 		assertThat(vet.getLastName()).isEqualTo("Douglas");
@@ -203,22 +158,22 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldAddNewVisitForPet() {
-		Subject pet7 = this.pets.findById(7);
+		Subject pet7 = this.subjectRepository.findById(7);
 		int found = pet7.getVisits().size();
 		Lecture visit = new Lecture();
 		pet7.addVisit(visit);
 		visit.setDescription("test");
-		this.visits.save(visit);
-		this.pets.save(pet7);
+		this.lectureRepository.save(visit);
+		this.subjectRepository.save(pet7);
 
-		pet7 = this.pets.findById(7);
+		pet7 = this.subjectRepository.findById(7);
 		assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
 		assertThat(visit.getId()).isNotNull();
 	}
 
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
-		Collection<Lecture> visits = this.visits.findBySubjectId(7);
+		Collection<Lecture> visits = this.lectureRepository.findBySubjectId(7);
 		assertThat(visits).hasSize(2);
 		Lecture[] visitArr = visits.toArray(new Lecture[visits.size()]);
 		assertThat(visitArr[0].getDate()).isNotNull();

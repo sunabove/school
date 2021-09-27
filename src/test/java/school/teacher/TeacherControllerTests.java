@@ -70,13 +70,13 @@ class TeacherControllerTests {
 
 	@Test
 	void testShowVetListHtml() throws Exception {
-		mockMvc.perform(get("/vets.html")).andExpect(status().isOk()).andExpect(model().attributeExists("vets"))
-				.andExpect(view().name("vets/vetList"));
+		mockMvc.perform(get("/teacherRepository.html")).andExpect(status().isOk()).andExpect(model().attributeExists("teacherRepository"))
+				.andExpect(view().name("teacherRepository/vetList"));
 	}
 
 	@Test
 	void testShowResourcesVetList() throws Exception {
-		ResultActions actions = mockMvc.perform(get("/vets").accept(MediaType.APPLICATION_JSON))
+		ResultActions actions = mockMvc.perform(get("/teacherRepository").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 		actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.vetList[0].id").value(1));

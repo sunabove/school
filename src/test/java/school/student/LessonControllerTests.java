@@ -61,20 +61,20 @@ class LessonControllerTests {
 
 	@Test
 	void testInitNewVisitForm() throws Exception {
-		mockMvc.perform(get("/owners/*/subjects/{petId}/lessons/new", TEST_PET_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/studentRepository/*/subjects/{petId}/lessons/new", TEST_PET_ID)).andExpect(status().isOk())
 				.andExpect(view().name("subjects/createOrUpdateVisitForm"));
 	}
 
 	@Test
 	void testProcessNewVisitFormSuccess() throws Exception {
-		mockMvc.perform(post("/owners/*/subjects/{petId}/lessons/new", TEST_PET_ID).param("name", "George")
+		mockMvc.perform(post("/studentRepository/*/subjects/{petId}/lessons/new", TEST_PET_ID).param("name", "George")
 				.param("description", "Lecture Description")).andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/owners/{ownerId}"));
+				.andExpect(view().name("redirect:/studentRepository/{ownerId}"));
 	}
 
 	@Test
 	void testProcessNewVisitFormHasErrors() throws Exception {
-		mockMvc.perform(post("/owners/*/subjects/{petId}/lessons/new", TEST_PET_ID).param("name", "George"))
+		mockMvc.perform(post("/studentRepository/*/subjects/{petId}/lessons/new", TEST_PET_ID).param("name", "George"))
 				.andExpect(model().attributeHasErrors("visit")).andExpect(status().isOk())
 				.andExpect(view().name("subjects/createOrUpdateVisitForm"));
 	}

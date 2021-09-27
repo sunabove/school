@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface StudentRepository extends Repository<Student, Integer> {
 
 	/**
-	 * Retrieve {@link Student}s from the data store by last name, returning all owners
+	 * Retrieve {@link Student}s from the data store by last name, returning all studentRepository
 	 * whose last name <i>starts</i> with the given name.
 	 * @param lastName Value to search for
 	 * @return a Collection of matching {@link Student}s (or an empty Collection if none

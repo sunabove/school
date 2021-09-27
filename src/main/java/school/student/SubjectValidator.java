@@ -43,7 +43,7 @@ public class SubjectValidator implements Validator {
 		}
 
 		// type validation
-		if (pet.isNew() && pet.getType() == null) {
+		if (pet.isNew() && pet.getSubjectType() == null) {
 			errors.rejectValue("type", REQUIRED, REQUIRED);
 		}
 

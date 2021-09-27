@@ -49,8 +49,8 @@ public class Subject extends NamedEntity {
 	private LocalDate birthDate;
 
 	@ManyToOne
-	@JoinColumn(name = "type_id")
-	private SubjectType type;
+	@JoinColumn(name = "subject_type_id")
+	private SubjectType subjectType;
 
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
@@ -67,12 +67,12 @@ public class Subject extends NamedEntity {
 		return this.birthDate;
 	}
 
-	public SubjectType getType() {
-		return this.type;
+	public SubjectType getSubjectType() {
+		return this.subjectType;
 	}
 
-	public void setType(SubjectType type) {
-		this.type = type;
+	public void setSubjectType(SubjectType type) {
+		this.subjectType = type;
 	}
 
 	public Student getOwner() {
