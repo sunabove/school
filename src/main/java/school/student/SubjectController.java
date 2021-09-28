@@ -52,7 +52,13 @@ class SubjectController {
 
 	@ModelAttribute("owner")
 	public Student findOwner(@PathVariable("ownerId") int ownerId) {
-		return this.students.findById(ownerId);
+		var opStudent = this.students.findById(ownerId);
+		
+		if( opStudent.isEmpty()) {
+			return null;
+		} else {
+			return opStudent.get();
+		}
 	}
 
 	@InitBinder("owner")

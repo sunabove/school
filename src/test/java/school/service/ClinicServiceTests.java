@@ -48,7 +48,7 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindSingleOwnerWithPet() {
-		Student student = this.studentRepository.findById(1);
+		Student student = this.studentRepository.findById(1).get();
 		assertThat(student.getLastName()).startsWith("Franklin");
 		assertThat(student.getSubjects()).hasSize(1);
 		assertThat(student.getSubjects().get(0).getSubjectType()).isNotNull();
@@ -77,7 +77,7 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldUpdateOwner() {
-		Student student = this.studentRepository.findById(1);
+		Student student = this.studentRepository.findById(1).get();
 		String oldLastName = student.getLastName();
 		String newLastName = oldLastName + "X";
 
@@ -85,7 +85,7 @@ class ClinicServiceTests {
 		this.studentRepository.save(student);
 
 		// retrieving new name from database
-		student = this.studentRepository.findById(1);
+		student = this.studentRepository.findById(1).get();
 		assertThat(student.getLastName()).isEqualTo(newLastName);
 	}
 
@@ -110,49 +110,49 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldInsertPetIntoDatabaseAndGenerateId() {
-		Student owner6 = this.studentRepository.findById(6);
-		int found = owner6.getSubjects().size();
+		Student student6 = this.studentRepository.findById(6).get();
+		int found = student6.getSubjects().size();
 
-		Subject pet = new Subject();
-		pet.setName("bowser");
+		Subject subject = new Subject();
+		subject.setName("bowser");
 		Collection<SubjectType> types = this.subjectRepository.findSubjectTypes();
-		pet.setSubjectType(EntityUtils.getById(types, SubjectType.class, 2));
-		pet.setBirthDate(LocalDate.now());
-		owner6.addSubject(pet);
-		assertThat(owner6.getSubjects().size()).isEqualTo(found + 1);
+		subject.setSubjectType(EntityUtils.getById(types, SubjectType.class, 2));
+		subject.setBirthDate(LocalDate.now());
+		student6.addSubject(subject);
+		assertThat(student6.getSubjects().size()).isEqualTo(found + 1);
 
-		this.subjectRepository.save(pet);
-		this.studentRepository.save(owner6);
+		this.subjectRepository.save(subject);
+		this.studentRepository.save(student6);
 
-		owner6 = this.studentRepository.findById(6);
-		assertThat(owner6.getSubjects().size()).isEqualTo(found + 1);
+		student6 = this.studentRepository.findById(6).get();
+		assertThat(student6.getSubjects().size()).isEqualTo(found + 1);
 		// checks that id has been generated
-		assertThat(pet.getId()).isNotNull();
+		assertThat(subject.getId()).isNotNull();
 	}
 
 	@Test
 	@Transactional
 	void shouldUpdatePetName() throws Exception {
-		Subject pet7 = this.subjectRepository.findById(7);
-		String oldName = pet7.getName();
+		Subject subject7 = this.subjectRepository.findById(7);
+		String oldName = subject7.getName();
 
 		String newName = oldName + "X";
-		pet7.setName(newName);
-		this.subjectRepository.save(pet7);
+		subject7.setName(newName);
+		this.subjectRepository.save(subject7);
 
-		pet7 = this.subjectRepository.findById(7);
-		assertThat(pet7.getName()).isEqualTo(newName);
+		subject7 = this.subjectRepository.findById(7);
+		assertThat(subject7.getName()).isEqualTo(newName);
 	}
 
 	@Test
 	void shouldFindVets() {
-		Collection<Teacher> vets = this.teacherRepository.findAll();
+		Collection<Teacher> teachers = this.teacherRepository.findAll();
 
-		Teacher vet = EntityUtils.getById(vets, Teacher.class, 3);
-		assertThat(vet.getLastName()).isEqualTo("Douglas");
-		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
-		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
-		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+		Teacher teacher = EntityUtils.getById(teachers, Teacher.class, 3);
+		assertThat(teacher.getLastName()).isEqualTo("Douglas");
+		assertThat(teacher.getNrOfSpecialties()).isEqualTo(2);
+		assertThat(teacher.getSpecialties().get(0).getName()).isEqualTo("dentistry");
+		assertThat(teacher.getSpecialties().get(1).getName()).isEqualTo("surgery");
 	}
 
 	@Test

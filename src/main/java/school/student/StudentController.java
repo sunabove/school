@@ -15,6 +15,7 @@ import school.lecture.LectureRepository;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 class StudentController {
@@ -69,7 +70,14 @@ class StudentController {
 		}
 
 		// find students by last name
-		Collection<Student> results = this.students.findByLastName(student.getLastName());
+		Collection<Student> results = new java.util.ArrayList<>();
+		
+		if(student.getLastName().trim().length() < 1 ) {
+			results = this.students.findAllOrderById();  
+		} else {
+			results = this.students.findByLastName(student.getLastName());
+		}
+		
 		if (results.isEmpty()) {
 			// no students found
 			result.rejectValue("lastName", "notFound", "not found");
@@ -84,14 +92,17 @@ class StudentController {
 		else {
 			// multiple students found
 			model.put("selections", results);
+			
 			return "students/studentsList";
 		}
 	}
 
 	@GetMapping("/students/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("studentId") int studentId, Model model) {
-		Student student = this.students.findById(studentId);
-		model.addAttribute(student);
+		Optional<Student> student = this.students.findById(studentId);
+		if( student.isPresent()) { 
+			model.addAttribute(student.get());
+		}
 		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
@@ -115,12 +126,14 @@ class StudentController {
 	 */
 	@GetMapping("/students/{studentId}")
 	public ModelAndView showOwner(@PathVariable("studentId") int studentId) {
-		ModelAndView mav = new ModelAndView("students/ownerDetails");
-		Student student = this.students.findById(studentId);
-		for (Subject subject : student.getSubjects()) {
-			subject.setLecturesInternal(lessons.findBySubjectId(subject.getId()));
+		ModelAndView mav = new ModelAndView("students/studentDetails");
+		Optional<Student> student = this.students.findById(studentId);
+		if( student.isPresent() ) { 
+			for (Subject subject : student.get().getSubjects()) {
+				subject.setLecturesInternal(lessons.findBySubjectId(subject.getId()));
+			}
+			mav.addObject(student.get());
 		}
-		mav.addObject(student);
 		
 		return mav;
 	}

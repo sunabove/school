@@ -33,19 +33,19 @@ INSERT INTO student(first_name, last_name, address, city, telephone) VALUES ( 'M
 INSERT INTO student(first_name, last_name, address, city, telephone) VALUES ( 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435');
 INSERT INTO student(first_name, last_name, address, city, telephone) VALUES ( 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487');
 
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Leo', TO_DATE('2010-09-07', 'YYYY-MM-DD'), 1, 1);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Basil', TO_DATE('2012-08-06', 'YYYY-MM-DD'), 6, 2);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Rosy', TO_DATE('2011-04-17', 'YYYY-MM-DD'), 2, 3);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Jewel', TO_DATE('2010-03-07', 'YYYY-MM-DD'), 2, 3);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Iggy', TO_DATE('2010-11-30', 'YYYY-MM-DD'), 3, 4);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('George', TO_DATE('2010-01-20', 'YYYY-MM-DD'), 4, 5);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Samantha', TO_DATE('2012-09-04', 'YYYY-MM-DD'), 1, 6);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Max', TO_DATE('2012-09-04', 'YYYY-MM-DD'), 1, 6);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Lucky', TO_DATE('2011-08-06', 'YYYY-MM-DD'), 5, 7);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Mulligan', TO_DATE('2007-02-24', 'YYYY-MM-DD'), 2, 8);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Freddy', TO_DATE('2010-03-09', 'YYYY-MM-DD'), 5, 9);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Lucky', TO_DATE('2010-06-24', 'YYYY-MM-DD'), 2, 10);
-INSERT INTO subject(name, birth_date, subject_type_id, owner_id) VALUES ('Sly', TO_DATE('2012-06-08', 'YYYY-MM-DD'), 1, 10);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Leo', TO_DATE('2010-09-07', 'YYYY-MM-DD'), 1, 1);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Basil', TO_DATE('2012-08-06', 'YYYY-MM-DD'), 6, 2);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Rosy', TO_DATE('2011-04-17', 'YYYY-MM-DD'), 2, 3);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Jewel', TO_DATE('2010-03-07', 'YYYY-MM-DD'), 2, 3);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Iggy', TO_DATE('2010-11-30', 'YYYY-MM-DD'), 3, 4);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('George', TO_DATE('2010-01-20', 'YYYY-MM-DD'), 4, 5);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Samantha', TO_DATE('2012-09-04', 'YYYY-MM-DD'), 1, 6);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Max', TO_DATE('2012-09-04', 'YYYY-MM-DD'), 1, 6);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Lucky', TO_DATE('2011-08-06', 'YYYY-MM-DD'), 5, 7);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Mulligan', TO_DATE('2007-02-24', 'YYYY-MM-DD'), 2, 8);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Freddy', TO_DATE('2010-03-09', 'YYYY-MM-DD'), 5, 9);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Lucky', TO_DATE('2010-06-24', 'YYYY-MM-DD'), 2, 10);
+INSERT INTO subject(name, birth_date, subject_type_id, student_id) VALUES ('Sly', TO_DATE('2012-06-08', 'YYYY-MM-DD'), 1, 10);
 
 INSERT INTO lecture(subject_id, visit_date, description) VALUES ( 7, TO_DATE('2013-01-01', 'YYYY-MM-DD'), 'rabies shot');
 INSERT INTO lecture(subject_id, visit_date, description) VALUES ( 8, TO_DATE('2013-01-02', 'YYYY-MM-DD'), 'rabies shot');

@@ -18,11 +18,11 @@ package school.student;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface StudentRepository extends Repository<Student, Integer> {
+public interface StudentRepository extends PagingAndSortingRepository<Student, Integer> {
 
 	/**
 	 * Retrieve {@link Student}s from the data store by last name, returning all studentRepository
@@ -32,22 +32,9 @@ public interface StudentRepository extends Repository<Student, Integer> {
 	 * found)
 	 */
 	//@Query("SELECT DISTINCT owner FROM Student owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
-	@Transactional(readOnly = true)
+	//@Transactional(readOnly = true)
 	Collection<Student> findByLastName(@Param("lastName") String lastName);
-
-	/**
-	 * Retrieve an {@link Student} from the data store by id.
-	 * @param id the id to search for
-	 * @return the {@link Student} if found
-	 */
-	//@Query("SELECT owner FROM Student owner left join fetch owner.pets WHERE owner.id =:id")
-	@Transactional(readOnly = true)
-	Student findById(@Param("id") Integer id);
-
-	/**
-	 * Save an {@link Student} to the data store, either inserting or updating it.
-	 * @param owner the {@link Student} to save
-	 */
-	void save(Student owner);
+	
+	Collection<Student> findAllOrderById(); 
 
 }

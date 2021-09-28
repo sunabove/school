@@ -82,7 +82,7 @@ class StudentControllerTests {
 		max.setName("Max");
 		max.setBirthDate(LocalDate.now());
 		george.setSubjectsInternal(Collections.singleton(max));
-		given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
+		given(this.owners.findById(TEST_OWNER_ID).get()).willReturn(george);
 		Lecture visit = new Lecture();
 		visit.setDate(LocalDate.now());
 		given(this.visits.findBySubjectId(max.getId())).willReturn(Collections.singletonList(visit));

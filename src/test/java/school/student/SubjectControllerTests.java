@@ -69,7 +69,7 @@ class SubjectControllerTests {
 		cat.setId(3);
 		cat.setName("hamster");
 		given(this.pets.findSubjectTypes()).willReturn(Lists.newArrayList(cat));
-		given(this.owners.findById(TEST_OWNER_ID)).willReturn(new Student());
+		given(this.owners.findById(TEST_OWNER_ID).get()).willReturn(new Student());
 		given(this.pets.findById(TEST_PET_ID)).willReturn(new Subject());
 
 	}
