@@ -9,12 +9,10 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
 import school.model.BaseEntity;
 
 @Entity
 @Table(name = "lecture")
-@Data
 public class Lecture extends BaseEntity {
 
 	private static final long serialVersionUID = 5857476193395691627L;
@@ -30,11 +28,32 @@ public class Lecture extends BaseEntity {
 	@Column(name = "subject_id")
 	private Integer subjectId;
 
-	/**
-	 * Creates a new instance of Lecture for the current visitDate
-	 */
 	public Lecture() {
 		this.date = LocalDate.now();
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(Integer subjectId) {
+		this.subjectId = subjectId;
 	} 
 
 }
