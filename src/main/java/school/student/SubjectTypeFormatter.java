@@ -36,24 +36,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubjectTypeFormatter implements Formatter<SubjectType> {
 
-	private final SubjectRepository pets;
+	private final SubjectRepository subjects;
 
 	@Autowired
-	public SubjectTypeFormatter(SubjectRepository pets) {
-		this.pets = pets;
+	public SubjectTypeFormatter(SubjectRepository subjects) {
+		this.subjects = subjects;
 	}
 
 	@Override
-	public String print(SubjectType petType, Locale locale) {
-		return petType.getName();
+	public String print(SubjectType subjectType, Locale locale) {
+		return subjectType.getName();
 	}
 
 	@Override
 	public SubjectType parse(String text, Locale locale) throws ParseException {
-		Collection<SubjectType> findPetTypes = this.pets.findPetTypes();
-		for (SubjectType type : findPetTypes) {
-			if (type.getName().equals(text)) {
-				return type;
+		Collection<SubjectType> findSubjectTypes = this.subjects.findSubjectTypes();
+		for (SubjectType subjectType : findSubjectTypes) {
+			if (subjectType.getName().equals(text)) {
+				return subjectType;
 			}
 		}
 		throw new ParseException("type not found: " + text, 0);

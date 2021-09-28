@@ -47,7 +47,7 @@ class SubjectController {
 
 	@ModelAttribute("types")
 	public Collection<SubjectType> populatePetTypes() {
-		return this.subjects.findPetTypes();
+		return this.subjects.findSubjectTypes();
 	}
 
 	@ModelAttribute("owner")

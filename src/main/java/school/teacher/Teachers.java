@@ -33,7 +33,7 @@ public class Teachers {
 	private List<Teacher> teachers;
 
 	@XmlElement
-	public List<Teacher> getVetList() {
+	public List<Teacher> getTeacherList() {
 		if (teachers == null) {
 			teachers = new ArrayList<>();
 		}

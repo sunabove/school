@@ -35,7 +35,7 @@ class TeacherController {
 		// Here we are returning an object of type 'Teachers' rather than a collection of Teacher
 		// objects so it is simpler for Object-Xml mapping
 		Teachers vets = new Teachers();
-		vets.getVetList().addAll(this.vets.findAll());
+		vets.getTeacherList().addAll(this.vets.findAll());
 		model.put("teacherRepository", vets);
 		return "teacherRepository/vetList";
 	}
@@ -45,7 +45,7 @@ class TeacherController {
 		// Here we are returning an object of type 'Teachers' rather than a collection of Teacher
 		// objects so it is simpler for JSon/Object mapping
 		Teachers vets = new Teachers();
-		vets.getVetList().addAll(this.vets.findAll());
+		vets.getTeacherList().addAll(this.vets.findAll());
 		return vets;
 	}
 

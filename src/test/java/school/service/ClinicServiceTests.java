@@ -99,7 +99,7 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindAllPetTypes() {
-		Collection<SubjectType> petTypes = this.subjectRepository.findPetTypes();
+		Collection<SubjectType> petTypes = this.subjectRepository.findSubjectTypes();
 
 		SubjectType petType1 = EntityUtils.getById(petTypes, SubjectType.class, 1);
 		assertThat(petType1.getName()).isEqualTo("cat");
@@ -115,7 +115,7 @@ class ClinicServiceTests {
 
 		Subject pet = new Subject();
 		pet.setName("bowser");
-		Collection<SubjectType> types = this.subjectRepository.findPetTypes();
+		Collection<SubjectType> types = this.subjectRepository.findSubjectTypes();
 		pet.setSubjectType(EntityUtils.getById(types, SubjectType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		owner6.addSubject(pet);
