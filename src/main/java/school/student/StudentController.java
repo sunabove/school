@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import school.lesson.LectureRepository;
+import school.lecture.LectureRepository;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -114,11 +114,11 @@ class StudentController {
 	@GetMapping("/students/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("students/ownerDetails");
-		Student owner = this.students.findById(ownerId);
-		for (Subject pet : owner.getPets()) {
-			pet.setVisitsInternal(lessons.findBySubjectId(pet.getId()));
+		Student student = this.students.findById(ownerId);
+		for (Subject subject : student.getPets()) {
+			subject.setVisitsInternal(lessons.findBySubjectId(subject.getId()));
 		}
-		mav.addObject(owner);
+		mav.addObject(student);
 		return mav;
 	}
 

@@ -12,8 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import school.lesson.Lecture;
-import school.lesson.LectureRepository;
+import school.lecture.Lecture;
+import school.lecture.LectureRepository;
 import school.student.Student;
 import school.student.StudentRepository;
 import school.student.Subject;
@@ -93,7 +93,7 @@ class ClinicServiceTests {
 	void shouldFindPetWithCorrectId() {
 		Subject subject7 = this.subjectRepository.findById(7);
 		assertThat(subject7.getName()).startsWith("Samantha");
-		assertThat(subject7.getOwner().getFirstName()).isEqualTo("Jean");
+		assertThat(subject7.getStudent().getFirstName()).isEqualTo("Jean");
 
 	}
 

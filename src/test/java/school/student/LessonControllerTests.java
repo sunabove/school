@@ -30,8 +30,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import school.lesson.LectureController;
-import school.lesson.LectureRepository;
+import school.lecture.LectureController;
+import school.lecture.LectureRepository;
 import school.student.Subject;
 import school.student.SubjectRepository;
 

@@ -51,3 +51,5 @@ INSERT INTO visits(pet_id, visit_date, description) VALUES ( 7, TO_DATE('2013-01
 INSERT INTO visits(pet_id, visit_date, description) VALUES ( 8, TO_DATE('2013-01-02', 'YYYY-MM-DD'), 'rabies shot');
 INSERT INTO visits(pet_id, visit_date, description) VALUES ( 8, TO_DATE('2013-01-03', 'YYYY-MM-DD'), 'neutered');
 INSERT INTO visits(pet_id, visit_date, description) VALUES ( 7, TO_DATE('2013-01-04', 'YYYY-MM-DD'), 'spayed');
+
+COMMIT ;

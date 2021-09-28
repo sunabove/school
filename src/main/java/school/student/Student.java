@@ -54,8 +54,8 @@ public class Student extends Person {
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-	private Set<Subject> pets;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+	private Set<Subject> subjects;
 
 	public String getAddress() {
 		return this.address;
@@ -82,14 +82,14 @@ public class Student extends Person {
 	}
 
 	protected Set<Subject> getPetsInternal() {
-		if (this.pets == null) {
-			this.pets = new HashSet<>();
+		if (this.subjects == null) {
+			this.subjects = new HashSet<>();
 		}
-		return this.pets;
+		return this.subjects;
 	}
 
 	protected void setPetsInternal(Set<Subject> pets) {
-		this.pets = pets;
+		this.subjects = pets;
 	}
 
 	public List<Subject> getPets() {
@@ -102,7 +102,7 @@ public class Student extends Person {
 		if (pet.isNew()) {
 			getPetsInternal().add(pet);
 		}
-		pet.setOwner(this);
+		pet.setStudent(this);
 	}
 
 	/**

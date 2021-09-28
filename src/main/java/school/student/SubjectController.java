@@ -99,7 +99,7 @@ class SubjectController {
 	@PostMapping("/subjects/{petId}/edit")
 	public String processUpdateForm(@Valid Subject pet, BindingResult result, Student owner, ModelMap model) {
 		if (result.hasErrors()) {
-			pet.setOwner(owner);
+			pet.setStudent(owner);
 			model.put("pet", pet);
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
