@@ -39,23 +39,24 @@ class StudentController {
 	public String initCreationForm(Map<String, Object> model) {
 		Student owner = new Student();
 		model.put("owner", owner);
+		
 		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/students/new")
-	public String processCreationForm(@Valid Student owner, BindingResult result) {
+	public String processCreationForm(@Valid Student student, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			this.students.save(owner);
-			return "redirect:/students/" + owner.getId();
+		} else {
+			this.students.save(student);
+			return "redirect:/students/" + student.getId();
 		}
 	}
 
 	@GetMapping("/students/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("student", new Student());
+		
 		return "students/findStudents";
 	}
 
