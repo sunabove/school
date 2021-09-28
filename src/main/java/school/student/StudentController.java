@@ -115,8 +115,8 @@ class StudentController {
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("students/ownerDetails");
 		Student student = this.students.findById(ownerId);
-		for (Subject subject : student.getPets()) {
-			subject.setVisitsInternal(lessons.findBySubjectId(subject.getId()));
+		for (Subject subject : student.getSubjects()) {
+			subject.setLecturesInternal(lessons.findBySubjectId(subject.getId()));
 		}
 		mav.addObject(student);
 		return mav;

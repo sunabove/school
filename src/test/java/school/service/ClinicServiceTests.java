@@ -50,9 +50,9 @@ class ClinicServiceTests {
 	void shouldFindSingleOwnerWithPet() {
 		Student student = this.studentRepository.findById(1);
 		assertThat(student.getLastName()).startsWith("Franklin");
-		assertThat(student.getPets()).hasSize(1);
-		assertThat(student.getPets().get(0).getSubjectType()).isNotNull();
-		assertThat(student.getPets().get(0).getSubjectType().getName()).isEqualTo("cat");
+		assertThat(student.getSubjects()).hasSize(1);
+		assertThat(student.getSubjects().get(0).getSubjectType()).isNotNull();
+		assertThat(student.getSubjects().get(0).getSubjectType().getName()).isEqualTo("cat");
 	}
 
 	@Test
@@ -111,21 +111,21 @@ class ClinicServiceTests {
 	@Transactional
 	void shouldInsertPetIntoDatabaseAndGenerateId() {
 		Student owner6 = this.studentRepository.findById(6);
-		int found = owner6.getPets().size();
+		int found = owner6.getSubjects().size();
 
 		Subject pet = new Subject();
 		pet.setName("bowser");
 		Collection<SubjectType> types = this.subjectRepository.findPetTypes();
 		pet.setSubjectType(EntityUtils.getById(types, SubjectType.class, 2));
 		pet.setBirthDate(LocalDate.now());
-		owner6.addPet(pet);
-		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+		owner6.addSubject(pet);
+		assertThat(owner6.getSubjects().size()).isEqualTo(found + 1);
 
 		this.subjectRepository.save(pet);
 		this.studentRepository.save(owner6);
 
 		owner6 = this.studentRepository.findById(6);
-		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+		assertThat(owner6.getSubjects().size()).isEqualTo(found + 1);
 		// checks that id has been generated
 		assertThat(pet.getId()).isNotNull();
 	}
@@ -159,15 +159,15 @@ class ClinicServiceTests {
 	@Transactional
 	void shouldAddNewVisitForPet() {
 		Subject pet7 = this.subjectRepository.findById(7);
-		int found = pet7.getVisits().size();
+		int found = pet7.getLectures().size();
 		Lecture visit = new Lecture();
-		pet7.addVisit(visit);
+		pet7.addLecture(visit);
 		visit.setDescription("test");
 		this.lectureRepository.save(visit);
 		this.subjectRepository.save(pet7);
 
 		pet7 = this.subjectRepository.findById(7);
-		assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
+		assertThat(pet7.getLectures().size()).isEqualTo(found + 1);
 		assertThat(visit.getId()).isNotNull();
 	}
 

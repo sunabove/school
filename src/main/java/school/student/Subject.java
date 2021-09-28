@@ -83,26 +83,26 @@ public class Subject extends NamedEntity {
 		this.student = owner;
 	}
 
-	protected Set<Lecture> getVisitsInternal() {
+	protected Set<Lecture> getLecturesInternal() {
 		if (this.lectures == null) {
 			this.lectures = new HashSet<>();
 		}
 		return this.lectures;
 	}
 
-	public void setVisitsInternal(Collection<Lecture> visits) {
-		this.lectures = new LinkedHashSet<>(visits);
+	public void setLecturesInternal(Collection<Lecture> lectures) {
+		this.lectures = new LinkedHashSet<>(lectures);
 	}
 
-	public List<Lecture> getVisits() {
-		List<Lecture> sortedVisits = new ArrayList<>(getVisitsInternal());
-		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
-		return Collections.unmodifiableList(sortedVisits);
+	public List<Lecture> getLectures() {
+		List<Lecture> sortedLectures = new ArrayList<>(getLecturesInternal());
+		PropertyComparator.sort(sortedLectures, new MutableSortDefinition("date", false, false));
+		return Collections.unmodifiableList(sortedLectures);
 	}
 
-	public void addVisit(Lecture lesson) {
-		getVisitsInternal().add(lesson);
-		lesson.setSubjectId(this.getId());
+	public void addLecture(Lecture lecture) {
+		getLecturesInternal().add(lecture);
+		lecture.setSubjectId(this.getId());
 	}
 
 }

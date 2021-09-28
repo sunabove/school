@@ -54,7 +54,7 @@ public class Student extends Person {
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private Set<Subject> subjects;
 
 	public String getAddress() {
@@ -81,28 +81,28 @@ public class Student extends Person {
 		this.telephone = telephone;
 	}
 
-	protected Set<Subject> getPetsInternal() {
+	protected Set<Subject> getSubjectsInternal() {
 		if (this.subjects == null) {
 			this.subjects = new HashSet<>();
 		}
 		return this.subjects;
 	}
 
-	protected void setPetsInternal(Set<Subject> pets) {
-		this.subjects = pets;
+	protected void setSubjectsInternal(Set<Subject> subjects) {
+		this.subjects = subjects;
 	}
 
-	public List<Subject> getPets() {
-		List<Subject> sortedPets = new ArrayList<>(getPetsInternal());
-		PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
-		return Collections.unmodifiableList(sortedPets);
-	}
+	public List<Subject> getSubjects() {
+		List<Subject> sortedSubjects = new ArrayList<>(getSubjectsInternal());
+		PropertyComparator.sort(sortedSubjects, new MutableSortDefinition("name", true, true));
+		return Collections.unmodifiableList(sortedSubjects);
+	} 
 
-	public void addPet(Subject pet) {
-		if (pet.isNew()) {
-			getPetsInternal().add(pet);
+	public void addSubject(Subject subject) {
+		if (subject.isNew()) {
+			getSubjectsInternal().add(subject);
 		}
-		pet.setStudent(this);
+		subject.setStudent(this);
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class Student extends Person {
 	 * @param name to test
 	 * @return true if pet name is already in use
 	 */
-	public Subject getPet(String name) {
-		return getPet(name, false);
+	public Subject getSubject(String name) {
+		return getSubject(name, false);
 	}
 
 	/**
@@ -119,14 +119,14 @@ public class Student extends Person {
 	 * @param name to test
 	 * @return true if pet name is already in use
 	 */
-	public Subject getPet(String name, boolean ignoreNew) {
+	public Subject getSubject(String name, boolean ignoreNew) {
 		name = name.toLowerCase();
-		for (Subject pet : getPetsInternal()) {
-			if (!ignoreNew || !pet.isNew()) {
-				String compName = pet.getName();
+		for (Subject subject : getSubjectsInternal()) { 
+			if (!ignoreNew || !subject.isNew()) {
+				String compName = subject.getName();
 				compName = compName.toLowerCase();
 				if (compName.equals(name)) {
-					return pet;
+					return subject;
 				}
 			}
 		}

@@ -66,25 +66,25 @@ class SubjectController {
 	}
 
 	@GetMapping("/subjects/new")
-	public String initCreationForm(Student owner, ModelMap model) {
+	public String initCreationForm(Student student, ModelMap model) {
 		Subject pet = new Subject();
-		owner.addPet(pet);
+		student.addSubject(pet);  
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/subjects/new")
-	public String processCreationForm(Student owner, @Valid Subject pet, BindingResult result, ModelMap model) {
-		if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
+	public String processCreationForm(Student student, @Valid Subject subject, BindingResult result, ModelMap model) {
+		if (StringUtils.hasLength(subject.getName()) && subject.isNew() && student.getSubject(subject.getName(), true) != null) {
 			result.rejectValue("name", "duplicate", "already exists");
 		}
-		owner.addPet(pet);
+		student.addSubject(subject);
 		if (result.hasErrors()) {
-			model.put("pet", pet);
+			model.put("pet", subject);
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.subjects.save(pet);
+			this.subjects.save(subject);
 			return "redirect:/students/{ownerId}";
 		}
 	}
@@ -104,7 +104,7 @@ class SubjectController {
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			owner.addPet(pet);
+			owner.addSubject(pet);
 			this.subjects.save(pet);
 			return "redirect:/students/{ownerId}";
 		}

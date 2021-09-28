@@ -81,7 +81,7 @@ class StudentControllerTests {
 		max.setSubjectType(dog);
 		max.setName("Max");
 		max.setBirthDate(LocalDate.now());
-		george.setPetsInternal(Collections.singleton(max));
+		george.setSubjectsInternal(Collections.singleton(max));
 		given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
 		Lecture visit = new Lecture();
 		visit.setDate(LocalDate.now());
@@ -184,7 +184,7 @@ class StudentControllerTests {
 						@SuppressWarnings("unchecked")
 						List<Subject> pets = (List<Subject>) item;
 						Subject pet = pets.get(0);
-						if (pet.getVisits().isEmpty()) {
+						if (pet.getLectures().isEmpty()) {
 							return false;
 						}
 						return true;
