@@ -54,7 +54,7 @@ public class Student extends Person {
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "student", targetEntity=Subject.class)
 	private Set<Subject> subjects;
 
 	public String getAddress() {
