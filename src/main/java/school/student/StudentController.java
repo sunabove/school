@@ -73,7 +73,7 @@ class StudentController {
 		Collection<Student> results = new java.util.ArrayList<>();
 		
 		if(student.getLastName().trim().length() < 1 ) {
-			results = this.students.findAllOrderById();  
+			results = this.students.findAllByOrderById();  
 		} else {
 			results = this.students.findByLastName(student.getLastName());
 		}

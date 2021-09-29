@@ -35,6 +35,6 @@ public interface StudentRepository extends PagingAndSortingRepository<Student, I
 	//@Transactional(readOnly = true)
 	Collection<Student> findByLastName(@Param("lastName") String lastName);
 	
-	Collection<Student> findAllOrderById(); 
+	Collection<Student> findAllByOrderById(); 
 
 }
