@@ -1,6 +1,7 @@
 package school.student;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -19,6 +20,10 @@ public interface StudentRepository extends PagingAndSortingRepository<Student, I
 	@Query("SELECT DISTINCT student FROM Student student left join fetch student.subjects WHERE student.lastName LIKE :lastName%")
 	@Transactional(readOnly = true)
 	Collection<Student> findByLastName(@Param("lastName") String lastName);
+	
+	@Query("SELECT student FROM Student student left join fetch student.subjects WHERE student.id =:id")
+	@Transactional(readOnly = true)
+	Optional<Student> findById(@Param("id") Integer id);
 	
 	Collection<Student> findAllByOrderById(); 
 

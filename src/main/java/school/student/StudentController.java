@@ -91,7 +91,7 @@ class StudentController {
 		}
 	}
 
-	@GetMapping("/students/{ownerId}/edit")
+	@GetMapping("/students/{studentId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("studentId") int studentId, Model model) {
 		Optional<Student> student = this.students.findById(studentId);
 		if( student.isPresent()) { 
@@ -122,6 +122,7 @@ class StudentController {
 	public ModelAndView showOwner(@PathVariable("studentId") int studentId) {
 		ModelAndView mav = new ModelAndView("students/studentDetails");
 		Optional<Student> student = this.students.findById(studentId);
+		
 		if( student.isPresent() ) { 
 			for (Subject subject : student.get().getSubjects()) {
 				subject.setLecturesInternal(lessons.findBySubjectId(subject.getId()));
