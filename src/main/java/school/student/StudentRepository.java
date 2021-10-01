@@ -16,8 +16,8 @@ public interface StudentRepository extends PagingAndSortingRepository<Student, I
 	 * @return a Collection of matching {@link Student}s (or an empty Collection if none
 	 * found)
 	 */
-	//@Query("SELECT DISTINCT owner FROM Student owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
-	//@Transactional(readOnly = true)
+	@Query("SELECT DISTINCT student FROM Student student left join fetch student.subjects WHERE student.lastName LIKE :lastName%")
+	@Transactional(readOnly = true)
 	Collection<Student> findByLastName(@Param("lastName") String lastName);
 	
 	Collection<Student> findAllByOrderById(); 

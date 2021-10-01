@@ -70,13 +70,7 @@ class StudentController {
 		}
 
 		// find students by last name
-		Collection<Student> results = new java.util.ArrayList<>();
-		
-		if(student.getLastName().trim().length() < 1 ) {
-			results = this.students.findAllByOrderById();  
-		} else {
-			results = this.students.findByLastName(student.getLastName());
-		}
+		Collection<Student> results = this.students.findByLastName(student.getLastName());
 		
 		if (results.isEmpty()) {
 			// no students found

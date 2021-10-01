@@ -14,7 +14,7 @@ import java.util.Collection;
 @RequestMapping("/students/{ownerId}")
 class SubjectController {
 
-	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "subjects/createOrUpdatePetForm";
+	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "subjects/createOrUpdateSubjectForm";
 
 	private final SubjectRepository subjects;
 	private final StudentRepository students;
