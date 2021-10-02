@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.school</groupId>
 	<artifactId>school</artifactId>
-	<version>1.5.0-SNAPSHOT</version>
+	<version>1.0</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
