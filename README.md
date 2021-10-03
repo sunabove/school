@@ -1,2 +1,2 @@
 # school
-school metanet
+Petclinic 원본 입니다.
