@@ -14,27 +14,27 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/students/{ownerId}")
+@RequestMapping("/student/{studentId}")
 public class SubjectController {
 
-	private static final String VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM = "subjects/createOrUpdateSubjectForm";
+	private static final String VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM = "subject/createOrUpdateSubjectForm";
 
-	private final SubjectRepository subjects;
-	private final StudentRepository students;
+	private final SubjectRepository subjectRepository;
+	private final StudentRepository studentRepository;
 
-	public SubjectController(SubjectRepository subjects, StudentRepository students) {
-		this.subjects = subjects;
-		this.students = students;
+	public SubjectController(SubjectRepository subjectRepository, StudentRepository studentRepository) {
+		this.subjectRepository = subjectRepository;
+		this.studentRepository = studentRepository;
 	}
 
 	@ModelAttribute("types")
 	public Collection<SubjectType> populateSubjectTypes() {
-		return this.subjects.findSubjectTypes();
+		return this.subjectRepository.findSubjectTypes();
 	}
 
 	@ModelAttribute("student")
 	public Student findOwner(@PathVariable("studentId") int studentId) {
-		var opStudent = this.students.findById(studentId);
+		var opStudent = this.studentRepository.findById(studentId);
 		
 		if( opStudent.isEmpty()) {
 			return null;
@@ -53,7 +53,7 @@ public class SubjectController {
 		dataBinder.setValidator(new SubjectValidator());
 	}
 
-	@GetMapping("/subjects/new")
+	@GetMapping("/subject/new")
 	public String initCreationForm(Student student, ModelMap model) {
 		Subject subject = new Subject();
 		student.addSubject(subject);
@@ -63,42 +63,45 @@ public class SubjectController {
 		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/subjects/new")
+	@PostMapping("/subject/new")
 	public String processCreationForm(Student student, @Valid Subject subject, BindingResult result, ModelMap model) {
 		if (StringUtils.hasLength(subject.getName()) && subject.isNew() && student.getSubject(subject.getName(), true) != null) {
 			result.rejectValue("name", "duplicate", "already exists");
 		}
+		
 		student.addSubject(subject);
+		
 		if (result.hasErrors()) {
 			model.put("pet", subject);
+			
 			return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			this.subjects.save(subject);
-			return "redirect:/students/{studentId}";
+		} else {
+			this.subjectRepository.save(subject);
+			
+			return "redirect:/student/{studentId}";
 		}
 	}
 
-	@GetMapping("/subjects/{subectId}/edit")
+	@GetMapping("/subject/{subectId}/edit")
 	public String initUpdateForm(@PathVariable("subectId") int subectId, ModelMap model) {
-		Subject pet = this.subjects.findById(subectId);
+		Subject pet = this.subjectRepository.findById(subectId);
 		model.put("pet", pet);
+		
 		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/subjects/{subectId}/edit")
+	@PostMapping("/subject/{subectId}/edit")
 	public String processUpdateForm(@Valid Subject subject, BindingResult result, Student student, ModelMap model) {
 		if (result.hasErrors()) {
 			subject.setStudent(student);
 			model.put("subject", subject);
 			
 			return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			student.addSubject(subject);
-			this.subjects.save(subject);
+			this.subjectRepository.save(subject);
 			
-			return "redirect:/students/{subectId}";
+			return "redirect:/student/{subectId}";
 		}
 	}
 

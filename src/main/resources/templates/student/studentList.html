@@ -24,7 +24,7 @@
               <td th:text="${student.address}"/>
               <td th:text="${student.city}"/>
               <td th:text="${student.telephone}"/>
-              <td><span th:text="${#strings.listJoin(student.subjects, ', ')}"/></td>
+              <td><span th:text="${#strings.listJoin(student.subjects, ', ')}"></span></td>
           </tr>
         </tbody>
     </table>

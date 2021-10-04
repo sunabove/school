@@ -24,10 +24,8 @@
       </tr>
     </table>
   
-    <a th:href="@{{id}/edit(id=${student.id})}" class="btn btn-default">Edit
-      Student</a>
-    <a th:href="@{{id}/sbujects/new(id=${student.id})}" class="btn btn-default">Add
-      New Subject</a>
+    <a th:href="@{{id}/edit(id=${student.id})}" class="btn btn-default">Edit Student</a>
+    <a th:href="@{{id}/sbuject/new(id=${student.id})}" class="btn btn-default">Add New Subject</a>
   
     <br />
     <br />
@@ -61,8 +59,8 @@
               <td th:text="${lecture?.description}"></td>
             </tr>
             <tr>
-              <td><a th:href="@{{studentId}/subjects/{subjectId}/edit(studentId=${student.id},subjectId=${subject.id})}">Edit Subject</a></td>
-              <td><a th:href="@{{studentId}/subjectss/{subjectId}/lectures/new(studentId=${student.id},subjectId=${subject.id})}">Add Lecture</a></td>
+              <td><a th:href="@{{studentId}/subject/{subjectId}/edit(studentId=${student.id},subjectId=${subject.id})}">Edit Subject</a></td>
+              <td><a th:href="@{{studentId}/subject/{subjectId}/lectures/new(studentId=${student.id},subjectId=${subject.id})}">Add Lecture</a></td>
             </tr>
           </table>
         </td>
