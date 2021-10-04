@@ -25,9 +25,15 @@ public class Teacher extends Person {
 	private static final long serialVersionUID = 2084743031499465723L;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "teacher_specialty", joinColumns = @JoinColumn(name = "vet_id"),
-			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+	@JoinTable(name = "teacher_specialty", 
+			joinColumns = @JoinColumn(name = "teacher_id"),
+			inverseJoinColumns = @JoinColumn(name = "specialty_id")
+		)
 	private Set<Specialty> specialties;
+	
+	public Teacher() {
+		
+	}
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {

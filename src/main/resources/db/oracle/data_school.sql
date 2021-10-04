@@ -1,4 +1,5 @@
-﻿INSERT INTO teacher(first_name, last_name) VALUES ( 'James', 'Carter');
+﻿
+INSERT INTO teacher(first_name, last_name) VALUES ( 'James', 'Carter');
 INSERT INTO teacher(first_name, last_name) VALUES ( 'Helen', 'Leary');
 INSERT INTO teacher(first_name, last_name) VALUES ( 'Linda', 'Douglas');
 INSERT INTO teacher(first_name, last_name) VALUES ( 'Rafael', 'Ortega');
@@ -9,11 +10,11 @@ INSERT INTO specialty(name) VALUES ( 'radiology');
 INSERT INTO specialty(name) VALUES ( 'surgery');
 INSERT INTO specialty(name) VALUES ( 'dentistry');
 
-INSERT INTO teacher_specialty(vet_id, specialty_id) VALUES (2, 1);
-INSERT INTO teacher_specialty(vet_id, specialty_id) VALUES (3, 2);
-INSERT INTO teacher_specialty(vet_id, specialty_id) VALUES (3, 3);
-INSERT INTO teacher_specialty(vet_id, specialty_id) VALUES (4, 2);
-INSERT INTO teacher_specialty(vet_id, specialty_id) VALUES (5, 1);
+INSERT INTO teacher_specialty(teacher_id, specialty_id) VALUES (2, 1);
+INSERT INTO teacher_specialty(teacher_id, specialty_id) VALUES (3, 2);
+INSERT INTO teacher_specialty(teacher_id, specialty_id) VALUES (3, 3);
+INSERT INTO teacher_specialty(teacher_id, specialty_id) VALUES (4, 2);
+INSERT INTO teacher_specialty(teacher_id, specialty_id) VALUES (5, 1);
 
 INSERT INTO subject_type(name) VALUES ( 'cat');
 INSERT INTO subject_type(name) VALUES ( 'dog' );
