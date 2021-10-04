@@ -14,7 +14,7 @@ import java.util.Collection;
 @RequestMapping("/students/{ownerId}")
 class SubjectController {
 
-	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "subjects/createOrUpdateSubjectForm";
+	private static final String VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM = "subjects/createOrUpdateSubjectForm";
 
 	private final SubjectRepository subjects;
 	private final StudentRepository students;
@@ -57,7 +57,7 @@ class SubjectController {
 		
 		model.put("subject", subject);
 		
-		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/subjects/new")
@@ -68,7 +68,7 @@ class SubjectController {
 		student.addSubject(subject);
 		if (result.hasErrors()) {
 			model.put("pet", subject);
-			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+			return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			this.subjects.save(subject);
@@ -80,7 +80,7 @@ class SubjectController {
 	public String initUpdateForm(@PathVariable("subectId") int subectId, ModelMap model) {
 		Subject pet = this.subjects.findById(subectId);
 		model.put("pet", pet);
-		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/subjects/{subectId}/edit")
@@ -89,7 +89,7 @@ class SubjectController {
 			subject.setStudent(student);
 			model.put("subject", subject);
 			
-			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+			return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			student.addSubject(subject);

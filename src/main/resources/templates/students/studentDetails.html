@@ -4,11 +4,7 @@
   th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 
   <body>
-  
-  
-    <h2>Owner Information</h2>
-  
-  
+    <h2>Student Information</h2>
     <table class="table table-striped" th:object="${student}">
       <tr>
         <th>Name</th>
@@ -29,9 +25,9 @@
     </table>
   
     <a th:href="@{{id}/edit(id=${student.id})}" class="btn btn-default">Edit
-      Owner</a>
+      Student</a>
     <a th:href="@{{id}/sbujects/new(id=${student.id})}" class="btn btn-default">Add
-      New Pet</a>
+      New Subject</a>
   
     <br />
     <br />

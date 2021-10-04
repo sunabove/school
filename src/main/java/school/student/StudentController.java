@@ -20,7 +20,7 @@ import java.util.Optional;
 @Controller
 class StudentController {
 
-	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "students/createOrUpdateStudentForm";
+	private static final String VIEWS_STUDENT_CREATE_OR_UPDATE_FORM = "students/createOrUpdateStudentForm";
 
 	private final StudentRepository students;
 
@@ -39,15 +39,15 @@ class StudentController {
 	@GetMapping("/students/new")
 	public String initCreationForm(Map<String, Object> model) {
 		Student owner = new Student();
-		model.put("owner", owner);
+		model.put("student", owner);
 		
-		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+		return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/students/new")
 	public String processCreationForm(@Valid Student student, BindingResult result) {
 		if (result.hasErrors()) {
-			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+			return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
 		} else {
 			this.students.save(student);
 			return "redirect:/students/" + student.getId();
@@ -97,14 +97,15 @@ class StudentController {
 		if( student.isPresent()) { 
 			model.addAttribute(student.get());
 		}
-		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+		
+		return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/students/{studentId}/edit")
 	public String processUpdateOwnerForm(@Valid Student student, BindingResult result,
 			@PathVariable("studentId") int studentId) {
 		if (result.hasErrors()) {
-			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+			return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			student.setId(studentId);
