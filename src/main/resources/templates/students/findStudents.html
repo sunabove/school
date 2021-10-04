@@ -2,7 +2,6 @@
   th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 
 <body>
-
   <h2>Find Students</h2>
 
   <form th:object="${student}" th:action="@{/students}" class="form-horizontal" id="search-owner-form">
