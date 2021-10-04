@@ -19,7 +19,7 @@
         <tbody>
           <tr th:each="student : ${selections}">
               <td>
-                  <a th:href="@{/students/__${student.id}__}" th:text="${student.firstName + ' ' + student.lastName}"/></a>
+                  <a th:href="@{/student/__${student.id}__}" th:text="${student.firstName + ' ' + student.lastName}"/></a>
               </td>
               <td th:text="${student.address}"/>
               <td th:text="${student.city}"/>

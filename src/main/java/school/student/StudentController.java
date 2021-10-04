@@ -21,15 +21,15 @@ import java.util.Optional;
 @Controller
 class StudentController {
 
-	private static final String VIEWS_STUDENT_CREATE_OR_UPDATE_FORM = "students/createOrUpdateStudentForm";
+	private static final String VIEWS_STUDENT_CREATE_OR_UPDATE_FORM = "student/createOrUpdateStudentForm";
 
-	private final StudentRepository students;
+	private final StudentRepository studentRepository;
 
-	private LectureRepository lessons;
+	private LectureRepository lessonRespository;
 
-	public StudentController(StudentRepository students, LectureRepository lessons) {
-		this.students = students;
-		this.lessons = lessons;
+	public StudentController(StudentRepository studentRepository, LectureRepository lessonRespository) {
+		this.studentRepository = studentRepository;
+		this.lessonRespository = lessonRespository;
 	}
 
 	@InitBinder
@@ -37,7 +37,7 @@ class StudentController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	@GetMapping("/students/new")
+	@GetMapping("/student/new")
 	public String initCreationForm(Map<String, Object> model) {
 		Student owner = new Student();
 		model.put("student", owner);
@@ -45,56 +45,56 @@ class StudentController {
 		return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/students/new")
+	@PostMapping("/student/new")
 	public String processCreationForm(@Valid Student student, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
 		} else {
-			this.students.save(student);
-			return "redirect:/students/" + student.getId();
+			this.studentRepository.save(student);
+			return "redirect:/student/" + student.getId();
 		}
 	}
 
-	@GetMapping("/students/find")
+	@GetMapping("/student/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("student", new Student());
 		
-		return "students/findStudents";
+		return "student/findStudent";
 	}
 
-	@GetMapping("/students")
+	@GetMapping("/student")
 	public String processFindForm(Student student, BindingResult result, Map<String, Object> model) {
 
-		// allow parameterless GET request for /students to return all records
+		// allow parameterless GET request for /studentRepository to return all records
 		if (student.getLastName() == null) {
 			student.setLastName(""); // empty string signifies broadest possible search
 		}
 
-		// find students by last name
-		Collection<Student> results = this.students.findByLastName(student.getLastName());
+		// find studentRepository by last name
+		Collection<Student> results = this.studentRepository.findByLastName(student.getLastName());
 		
 		if (results.isEmpty()) {
-			// no students found
+			// no studentRepository found
 			result.rejectValue("lastName", "notFound", "not found");
 			
-			return "students/findStudents";
+			return "student/findStudent";
 		}
 		else if (results.size() == 1) {
 			// 1 owner found
 			student = results.iterator().next();
-			return "redirect:/students/" + student.getId();
+			return "redirect:/student/" + student.getId();
 		}
 		else {
-			// multiple students found
+			// multiple studentRepository found
 			model.put("selections", results);
 			
-			return "students/studentsList";
+			return "student/studentList";
 		}
 	}
 
-	@GetMapping("/students/{studentId}/edit")
+	@GetMapping("/student/{studentId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("studentId") int studentId, Model model) {
-		Optional<Student> student = this.students.findById(studentId);
+		Optional<Student> student = this.studentRepository.findById(studentId);
 		if( student.isPresent()) { 
 			model.addAttribute(student.get());
 		}
@@ -102,16 +102,16 @@ class StudentController {
 		return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/students/{studentId}/edit")
+	@PostMapping("/student/{studentId}/edit")
 	public String processUpdateOwnerForm(@Valid Student student, BindingResult result,
 			@PathVariable("studentId") int studentId) {
 		if (result.hasErrors()) {
 			return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			student.setId(studentId);
-			this.students.save(student);
-			return "redirect:/students/{studentId}";
+			this.studentRepository.save(student);
+			
+			return "redirect:/student/{studentId}";
 		}
 	}
 
@@ -120,14 +120,15 @@ class StudentController {
 	 * @param studentId the ID of the owner to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
-	@GetMapping("/students/{studentId}")
+	@GetMapping("/student/{studentId}")
 	public ModelAndView showOwner(@PathVariable("studentId") int studentId) {
-		ModelAndView mav = new ModelAndView("students/studentDetails");
-		Optional<Student> student = this.students.findById(studentId);
+		ModelAndView mav = new ModelAndView("student/studentDetail");
+		
+		Optional<Student> student = this.studentRepository.findById(studentId);
 		
 		if( student.isPresent() ) { 
 			for (Subject subject : student.get().getSubjects()) {
-				subject.setLecturesInternal(lessons.findBySubjectId(subject.getId()));
+				subject.setLecturesInternal(lessonRespository.findBySubjectId(subject.getId()));
 			}
 			mav.addObject(student.get());
 		}
