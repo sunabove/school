@@ -72,7 +72,7 @@ public class SubjectController {
 		student.addSubject(subject);
 		
 		if (result.hasErrors()) {
-			model.put("pet", subject);
+			model.put("subject", subject);
 			
 			return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -84,8 +84,8 @@ public class SubjectController {
 
 	@GetMapping("/subject/{subectId}/edit")
 	public String initUpdateForm(@PathVariable("subectId") int subectId, ModelMap model) {
-		Subject pet = this.subjectRepository.findById(subectId);
-		model.put("pet", pet);
+		Subject subject = this.subjectRepository.findById(subectId);
+		model.put("pet", subject);
 		
 		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
