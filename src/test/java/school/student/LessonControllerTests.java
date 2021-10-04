@@ -32,8 +32,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import school.lecture.LectureController;
 import school.lecture.LectureRepository;
-import school.student.Subject;
-import school.student.SubjectRepository;
+import school.subject.Subject;
+import school.subject.SubjectRepository;
 
 /**
  * Test class for {@link LectureController}

@@ -1,4 +1,4 @@
-package school.student;
+package school.subject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,12 +7,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import school.student.Student;
+import school.student.StudentRepository;
+
 import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
 @RequestMapping("/students/{ownerId}")
-class SubjectController {
+public class SubjectController {
 
 	private static final String VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM = "subjects/createOrUpdateSubjectForm";
 

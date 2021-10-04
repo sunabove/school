@@ -34,6 +34,7 @@ import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
 
 import school.model.Person;
+import school.subject.Subject;
 
 @Entity
 @Table(name = "student")

@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import school.student.Subject;
-import school.student.SubjectRepository;
+import school.subject.Subject;
+import school.subject.SubjectRepository;
 
 @Controller
 public class LectureController {

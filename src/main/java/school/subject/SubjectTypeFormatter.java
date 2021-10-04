@@ -1,4 +1,4 @@
-package school.student;
+package school.subject;
 
 import java.text.ParseException;
 import java.util.Collection;

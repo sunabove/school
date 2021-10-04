@@ -1,19 +1,3 @@
-/*
- * Copyright 2012-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package school.student;
 
 import static org.mockito.BDDMockito.given;
@@ -33,19 +17,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import school.student.Student;
-import school.student.StudentRepository;
-import school.student.Subject;
-import school.student.SubjectController;
-import school.student.SubjectRepository;
-import school.student.SubjectType;
-import school.student.SubjectTypeFormatter;
+import school.subject.Subject;
+import school.subject.SubjectController;
+import school.subject.SubjectRepository;
+import school.subject.SubjectType;
+import school.subject.SubjectTypeFormatter;
 
-/**
- * Test class for the {@link SubjectController}
- *
- * @author Colin But
- */
 @WebMvcTest(value = SubjectController.class,
 		includeFilters = @ComponentScan.Filter(value = SubjectTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE))
 class SubjectControllerTests {

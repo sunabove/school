@@ -1,4 +1,4 @@
-package school.student;
+package school.subject;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import school.lecture.Lecture;
 import school.model.NamedEntity;
+import school.student.Student;
 
 @Entity
 @Table(name = "subject")
@@ -53,11 +54,11 @@ public class Subject extends NamedEntity {
 		return this.student;
 	}
 
-	protected void setStudent(Student owner) {
+	public void setStudent(Student owner) {
 		this.student = owner;
 	}
 
-	protected Set<Lecture> getLecturesInternal() {
+	public Set<Lecture> getLecturesInternal() {
 		if (this.lectures == null) {
 			this.lectures = new HashSet<>();
 		}

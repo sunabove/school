@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import school.lecture.LectureRepository;
+import school.subject.Subject;
 
 import javax.validation.Valid;
 import java.util.Collection;

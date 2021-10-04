@@ -16,9 +16,9 @@ import school.lecture.Lecture;
 import school.lecture.LectureRepository;
 import school.student.Student;
 import school.student.StudentRepository;
-import school.student.Subject;
-import school.student.SubjectRepository;
-import school.student.SubjectType;
+import school.subject.Subject;
+import school.subject.SubjectRepository;
+import school.subject.SubjectType;
 import school.teacher.Teacher;
 import school.teacher.TeacherRepository;
 
