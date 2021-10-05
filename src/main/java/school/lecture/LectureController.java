@@ -1,24 +1,10 @@
-/*
- * Copyright 2012-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package school.lecture;
 
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,13 +20,13 @@ import school.subject.SubjectRepository;
 @Controller
 public class LectureController {
 
-	private final LectureRepository lessons;
+	@Autowired
+	private LectureRepository lectureRepository;
 
-	private final SubjectRepository subjects;
+	@Autowired
+	private SubjectRepository subjectRepository;
 
-	public LectureController(LectureRepository lessons, SubjectRepository subjects) {
-		this.lessons = lessons;
-		this.subjects = subjects;
+	public LectureController() {
 	}
 
 	@InitBinder
@@ -55,31 +41,33 @@ public class LectureController {
 	 * @param petId
 	 * @return Subject
 	 */
-	@ModelAttribute("visit")
-	public Lecture loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
-		Subject pet = this.subjects.findById(petId);
-		pet.setLecturesInternal(this.lessons.findBySubjectId(petId));
-		model.put("pet", pet);
-		Lecture visit = new Lecture();
-		pet.addLecture(visit);
-		return visit;
+	@ModelAttribute("lecture")
+	public Lecture loadPetWithVisit(@PathVariable("subjectId") int subjectId, Map<String, Object> model) {
+		Subject subject = this.subjectRepository.findById(subjectId);
+		subject.setLecturesInternal(this.lectureRepository.findBySubjectId(subjectId));
+		Lecture lecture = new Lecture();
+		subject.addLecture(lecture);
+		
+		model.put("subject", subject);
+		
+		return lecture;
 	}
 
 	// Spring MVC calls method loadPetWithVisit(...) before initNewVisitForm is called
-	@GetMapping("/studentRepository/*/subjects/{petId}/lessons/new")
-	public String initNewVisitForm(@PathVariable("petId") int petId, Map<String, Object> model) {
-		return "subjects/createOrUpdateVisitForm";
+	@GetMapping("/student/*/subject/{subjectId}/lesson/new")
+	public String initNewVisitForm(@PathVariable("subjectId") int subjectId, Map<String, Object> model) {
+		return "subject/createOrUpdateLectureForm";
 	}
 
 	// Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
-	@PostMapping("/studentRepository/{ownerId}/subjects/{petId}/lessons/new")
-	public String processNewVisitForm(@Valid Lecture visit, BindingResult result) {
+	@PostMapping("/student/{ownerId}/subject/{subjectId}/lesson/new")
+	public String processNewVisitForm(@Valid Lecture lecture, BindingResult result) {
 		if (result.hasErrors()) {
-			return "subjects/createOrUpdateVisitForm";
+			return "subject/createOrUpdateLectureForm";
 		}
 		else {
-			this.lessons.save(visit);
-			return "redirect:/studentRepository/{ownerId}";
+			this.lectureRepository.save(lecture);
+			return "redirect:/student/{ownerId}";
 		}
 	}
 

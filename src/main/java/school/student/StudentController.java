@@ -1,5 +1,6 @@
 package school.student;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,13 +24,12 @@ class StudentController {
 
 	private static final String VIEWS_STUDENT_CREATE_OR_UPDATE_FORM = "student/createOrUpdateStudentForm";
 
-	private final StudentRepository studentRepository;
-
+	@Autowired
+	private StudentRepository studentRepository;
+	@Autowired
 	private LectureRepository lessonRespository;
 
-	public StudentController(StudentRepository studentRepository, LectureRepository lessonRespository) {
-		this.studentRepository = studentRepository;
-		this.lessonRespository = lessonRespository;
+	public StudentController() {
 	}
 
 	@InitBinder
