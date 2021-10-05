@@ -1,5 +1,6 @@
 package school.subject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -19,15 +20,15 @@ public class SubjectController {
 
 	private static final String VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM = "subject/createOrUpdateSubjectForm";
 
-	private final SubjectRepository subjectRepository;
-	private final StudentRepository studentRepository;
-
-	public SubjectController(SubjectRepository subjectRepository, StudentRepository studentRepository) {
-		this.subjectRepository = subjectRepository;
-		this.studentRepository = studentRepository;
+	@Autowired
+	private SubjectRepository subjectRepository;
+	@Autowired
+	private StudentRepository studentRepository;
+	
+	public SubjectController() {		
 	}
 
-	@ModelAttribute("types")
+	@ModelAttribute("subjectTypes")
 	public Collection<SubjectType> populateSubjectTypes() {
 		return this.subjectRepository.findSubjectTypes();
 	}
@@ -59,6 +60,7 @@ public class SubjectController {
 		student.addSubject(subject);
 		
 		model.put("subject", subject);
+		model.put("subjectTypes", this.populateSubjectTypes()); 
 		
 		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
