@@ -124,13 +124,16 @@ class StudentController {
 	public ModelAndView showOwner(@PathVariable("studentId") int studentId) {
 		ModelAndView mav = new ModelAndView("student/studentDetail.html");
 		
-		Optional<Student> student = this.studentRepository.findById(studentId);
+		Optional<Student> studentOp = this.studentRepository.findById(studentId);
 		
-		if( student.isPresent() ) { 
-			for (Subject subject : student.get().getSubjects()) {
+		if( studentOp.isPresent() ) { 
+			Student student = studentOp.get();
+			
+			for (Subject subject : student.getSubjects()) {
 				subject.setLecturesInternal(lessonRespository.findBySubjectId(subject.getId()));
 			}
-			mav.addObject(student.get());
+			
+			mav.addObject( student );
 		}
 		
 		return mav;

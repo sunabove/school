@@ -62,6 +62,7 @@ public class Subject extends NamedEntity {
 		if (this.lectures == null) {
 			this.lectures = new HashSet<>();
 		}
+		
 		return this.lectures;
 	}
 
@@ -72,6 +73,7 @@ public class Subject extends NamedEntity {
 	public List<Lecture> getLectures() {
 		List<Lecture> sortedLectures = new ArrayList<>(getLecturesInternal());
 		PropertyComparator.sort(sortedLectures, new MutableSortDefinition("date", false, false));
+		
 		return Collections.unmodifiableList(sortedLectures);
 	}
 
