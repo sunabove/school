@@ -122,7 +122,7 @@ class StudentController {
 	 */
 	@GetMapping("/student/{studentId}")
 	public ModelAndView showOwner(@PathVariable("studentId") int studentId) {
-		ModelAndView mav = new ModelAndView("student/studentDetail.html");
+		ModelAndView mav = new ModelAndView("student/studentDetail");
 		
 		Optional<Student> studentOp = this.studentRepository.findById(studentId);
 		
