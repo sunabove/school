@@ -82,7 +82,7 @@ public class SubjectController {
 		}
 	}
 
-	@GetMapping("/subject/{subectId}/edit")
+	@GetMapping("/subject/{subjectId}/edit")
 	public String initUpdateForm(@PathVariable("subectId") int subectId, ModelMap model) {
 		Subject subject = this.subjectRepository.findById(subectId);
 		model.put("subject", subject);
@@ -90,7 +90,7 @@ public class SubjectController {
 		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping("/subject/{subectId}/edit")
+	@PostMapping("/subject/{subjectId}/edit")
 	public String processUpdateForm(@Valid Subject subject, BindingResult result, Student student, ModelMap model) {
 		if (result.hasErrors()) {
 			subject.setStudent(student);
@@ -101,7 +101,7 @@ public class SubjectController {
 			student.addSubject(subject);
 			this.subjectRepository.save(subject);
 			
-			return "redirect:/student/{subectId}";
+			return "redirect:/student/{subjectId}";
 		}
 	}
 
