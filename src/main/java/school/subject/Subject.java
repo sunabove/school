@@ -46,16 +46,16 @@ public class Subject extends NamedEntity {
 		return this.subjectType;
 	}
 
-	public void setSubjectType(SubjectType type) {
-		this.subjectType = type;
+	public void setSubjectType(SubjectType subjectType) {
+		this.subjectType = subjectType;
 	}
 
 	public Student getStudent() {
 		return this.student;
 	}
 
-	public void setStudent(Student owner) {
-		this.student = owner;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 	public Set<Lecture> getLecturesInternal() {

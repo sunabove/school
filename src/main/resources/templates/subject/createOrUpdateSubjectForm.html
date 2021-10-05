@@ -1,32 +1,32 @@
-<html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 
 <body>
-
-  <h2> <th:block th:if="${subject['new']}">New</th:block> Pet </h2>
-  <form th:object="${subject}" class="form-horizontal" method="post">
-    <input type="hidden" name="id" th:value="*{id}" />
-    <div class="form-group has-feedback">
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Owner</label>
-        <div class="col-sm-10">
-          <span th:text="${subject.owner?.firstName + ' ' + subject.owner?.lastName}"></span>
-        </div>
-      </div>
-      <input
-        th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
-      <input
-        th:replace="~{fragments/inputField :: input ('Birth Date', 'birthDate', 'date')}" />
-      <input
-        th:replace="~{fragments/selectField :: select ('Type', 'type', ${types})}" />
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button  class="btn btn-default" type="submit" 
-          th:with="text=${subject['new']} ? 'Add Subject' : 'Update Subject'" th:text="${text}" >Add Subject</button>
-      </div>
-    </div>
-  </form>
+	<h2>
+		<th:block th:if="${subject['new']}">New</th:block> Subject
+	</h2>
+	
+	<form th:object="${subject}" class="form-horizontal" method="post">
+		<input type="hidden" name="id" th:value="*{id}" />
+		<div class="form-group has-feedback">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Owner</label>
+				<div class="col-sm-10">
+					<span th:text="${subject.student?.firstName + ' ' + subject.student?.lastName}"></span>
+				</div>
+			</div>
+			<input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
+			<input th:replace="~{fragments/inputField :: input ('Birth Date', 'birthDate', 'date')}" />
+			<input th:replace="~{fragments/selectField :: select ('Type', 'type', ${types})}" />
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button class="btn btn-default" type="submit" 
+					th:with="text=${subject['new']} ? 'Add Subject' : 'Update Subject'" th:text="${text}" >
+					Add Subject
+				</button>
+			</div>
+		</div>
+	</form>
 
 </body>
 

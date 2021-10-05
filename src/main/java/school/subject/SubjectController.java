@@ -85,7 +85,7 @@ public class SubjectController {
 	@GetMapping("/subject/{subectId}/edit")
 	public String initUpdateForm(@PathVariable("subectId") int subectId, ModelMap model) {
 		Subject subject = this.subjectRepository.findById(subectId);
-		model.put("pet", subject);
+		model.put("subject", subject);
 		
 		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
