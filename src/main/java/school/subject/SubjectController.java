@@ -60,7 +60,6 @@ public class SubjectController {
 		student.addSubject(subject);
 		
 		model.put("subject", subject);
-		model.put("subjectTypes", this.populateSubjectTypes()); 
 		
 		return VIEWS_SUBJECTS_CREATE_OR_UPDATE_FORM;
 	}
