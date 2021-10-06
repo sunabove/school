@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html xmlns:th="https://www.thymeleaf.org" th:fragment="layout (template, menu)">
 
 <head>
 
@@ -49,9 +49,24 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav me-auto mb-2 mb-md-0">
-					<li class="nav-item"><a class="nav-link active" aria-current="page" href="#" th:href="@{/student/find}">Find Students</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" th:href="@{/teacher.html}">Teachers</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" th:href="@{/oups}">Error</a></li>					
+					<li class="nav-item">
+						<a  class="nav-link" th:class="${ menu == 'student' ? 'nav-link active' : 'nav-link'}" 
+							th:href="@{/student/find}">
+							Find Students
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:class="${ menu == 'teacher' ? 'nav-link active' : 'nav-link'}" 
+							th:href="@{/teacher.html}">
+							Teachers
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:class="${ menu == 'error' ? 'nav-link active' : 'nav-link'}" 
+							th:href="@{/oups}">
+							Error
+						</a>
+					</li>					
 				</ul>
 				<form class="d-flex">
 					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -66,11 +81,7 @@
 	
 	<main class="container">
 		<div class="row bg-light p-5 rounded">
-			<th:block th:include="${template}" />
-			<!-- 
-			<h1>Navbar example</h1>
-			<p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works.</p>
-			 -->			
+			<th:block th:include="${template}" />			
 		</div>
 
 		<div class="row">
