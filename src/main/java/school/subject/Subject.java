@@ -19,9 +19,9 @@ public class Subject extends NamedEntity {
 
 	private static final long serialVersionUID = -1293065869305310710L;
 
-	@Column(name = "birth_date")
+	@Column(name = "subject_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate birthDate;
+	private LocalDate subjectDate;
 
 	@ManyToOne
 	@JoinColumn(name = "subject_type_id")
@@ -34,12 +34,12 @@ public class Subject extends NamedEntity {
 	@Transient
 	private Set<Lecture> lectures = new LinkedHashSet<>();
 
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
+	public void setSubjectDate(LocalDate subjectDate) {
+		this.subjectDate = subjectDate;
 	}
 
-	public LocalDate getBirthDate() {
-		return this.birthDate;
+	public LocalDate getSubjectDate() {
+		return this.subjectDate;
 	}
 
 	public SubjectType getSubjectType() {

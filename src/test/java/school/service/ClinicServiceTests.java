@@ -117,7 +117,7 @@ class ClinicServiceTests {
 		pet.setName("bowser");
 		Collection<SubjectType> types = this.subjectRepository.findSubjectTypes();
 		pet.setSubjectType(EntityUtils.getById(types, SubjectType.class, 2));
-		pet.setBirthDate(LocalDate.now());
+		pet.setSubjectDate(LocalDate.now());
 		owner6.addSubject(pet);
 		assertThat(owner6.getSubjects().size()).isEqualTo(found + 1);
 

@@ -61,7 +61,7 @@ class StudentControllerTests {
 		max.setId(1);
 		max.setSubjectType(dog);
 		max.setName("Max");
-		max.setBirthDate(LocalDate.now());
+		max.setSubjectDate(LocalDate.now());
 		george.setSubjectsInternal(Collections.singleton(max));
 		given(this.owners.findById(TEST_OWNER_ID).get()).willReturn(george);
 		Lecture visit = new Lecture();

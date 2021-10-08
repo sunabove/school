@@ -50,7 +50,7 @@
 						<dt>Name</dt>
 						<dd th:text="${subject.name}"></dd>
 						<dt>Birth Date</dt>
-						<dd th:text="${#temporals.format(subject.birthDate, 'yyyy-MM-dd')}"></dd>
+						<dd th:text="${#temporals.format(subject.subjectDate, 'yyyy-MM-dd')}"></dd>
 						<dt>Type</dt>
 						<dd th:text="${subject.subjectType}"></dd>
 					</dl>

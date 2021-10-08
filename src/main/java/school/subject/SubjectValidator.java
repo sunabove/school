@@ -33,7 +33,7 @@ public class SubjectValidator implements Validator {
 		}
 
 		// birth date validation
-		if (pet.getBirthDate() == null) {
+		if (pet.getSubjectDate() == null) {
 			errors.rejectValue("birthDate", REQUIRED, REQUIRED);
 		}
 	}

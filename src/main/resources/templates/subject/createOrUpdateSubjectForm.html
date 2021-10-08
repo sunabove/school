@@ -12,16 +12,15 @@
 	<form th:object="${subject}" class="form-horizontal" method="post">
 		<input type="hidden" name="id" th:value="*{id}" />
 		
-		<div class="form-group has-feedback">
-			<div class="form-group">
-				<label >Student : </label>
-				<span th:text="${subject.student?.firstName + ' ' + subject.student?.lastName}"></span>
-			</div>
+		<div class="form-group">
+			<label >Student : </label>
+			<span th:text="${subject.student?.firstName + ' ' + subject.student?.lastName}"></span>
 			
 			<br/>
+			<br/>
 			
-			<input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
-			<input th:replace="~{fragments/inputField :: input ('Birth Date', 'birthDate', 'date')}" />
+			<input th:replace="~{fragments/inputField :: input ('Subject Name', 'name', 'text')}" />
+			<input th:replace="~{fragments/inputField :: input ('Subject Date', 'subjectDate', 'date')}" />
 			<input th:replace="~{fragments/selectField :: select ('Type', 'subjectType', ${subjectTypes})}" />
 		</div>
 		

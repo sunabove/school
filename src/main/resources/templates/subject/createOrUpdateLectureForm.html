@@ -20,7 +20,7 @@
     <tr>
       <td th:text="${subject.name}"></td>
       <td
-        th:text="${#temporals.format(subject.birthDate, 'yyyy-MM-dd')}"></td>
+        th:text="${#temporals.format(subject.subjectDate, 'yyyy-MM-dd')}"></td>
       <td th:text="${subject.subjectType}"></td>
       <td
         th:text="${subject.student?.firstName + ' ' + subject.student?.lastName}"></td>
